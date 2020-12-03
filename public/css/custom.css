@@ -1,0 +1,56 @@
+/* SHORTCUTS */
+.w-10{
+    width: 10%;
+}
+
+/* HEADER */
+.mega-menu-content .portfolio-image{
+    height: 185px;
+}
+
+
+/* GALLERY */
+.gallery-item{
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* SIDE PANEL */
+.side-panel #header nav>ul>li>a{
+    text-transform: lowercase;
+}
+
+
+/* CARD */
+.card-loading{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(0 0 0 / 37%);
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+}
+.card-loading .spinner-grow{
+    z-index: 6;
+    margin: auto;
+}
+.card-footer{
+    display: inline-flex;
+    justify-content: space-between;
+}
+.table-query-row{
+    margin-bottom: 0.5rem;
+}
+
+
+/* FORM */
+.form-inline{
+    padding-top: .5rem!important;
+    padding-bottom: .5rem!important;
+}
+.form-inline label{
+    margin-right: 1rem;
+}
