@@ -14,6 +14,10 @@ const studentSchema = mongoose.Schema({
         type: String,
         required: [true, "Öğrenci baba adı zorunludur"]
     },
+    student_photo: {
+        type: String,
+        required: false
+    },
     student_gender: {
         type: String,
         required: [true, "Öğrenci cinsiyeti zorunludur"]

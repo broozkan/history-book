@@ -1,30 +1,71 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
+import api from '../../services/api'
 import CardLoader from '../Loader/CardLoader'
+import Swal from 'sweetalert2'
+import { fixdate } from '../../services/fixdate'
 
 
-const FormStaff = () => {
+const FormStaff = (props) => {
 
     const [state, setState] = useState({
-        staff_name:'',
-        staff_surname:'',
-        staff_birthday:'',
-        staff_nationality:'',
-        staff_country:'',
-        staff_gender:'',
-        staff_duty:'',
-        staff_branch:'',
-        staff_duty_beginning_date:'',
-        staff_duty_ending_date:''
+        staff_name: '',
+        staff_surname: '',
+        staff_photo: '',
+        staff_birthday: '',
+        staff_nationality: '',
+        staff_country: '',
+        staff_gender: '',
+        staff_duty: '',
+        staff_branch: '',
+        staff_duty_beginning_date: '',
+        staff_duty_ending_date: ''
     })
 
+    const resetState = () => {
+        setState({
+            staff_name: '',
+            staff_surname: '',
+            staff_photo: '',
+            staff_birthday: '',
+            staff_nationality: '',
+            staff_country: '',
+            staff_gender: '',
+            staff_duty: '',
+            staff_branch: '',
+            staff_duty_beginning_date: '',
+            staff_duty_ending_date: ''
+        })
+    }
+
+    useEffect(() => {
+        if (props.staff_id) {
+            getStaff()
+        }
+    }, [])
+
+    const getStaff = async () => {
+        setState({
+            ...state,
+            is_form_submitting: true
+        })
+
+        const staff = await api.get('/staff/get/' + props.staff_id, {})
+
+        staff.data.staff_birthday = fixdate(staff.data.staff_birthday)
+        staff.data.staff_duty_beginning_date = fixdate(staff.data.staff_duty_beginning_date)
+        staff.data.staff_duty_ending_date = fixdate(staff.data.staff_duty_ending_date)
+
+        setState(staff.data)
+
+    }
 
     const handleChange = (e) => {
-        if(e.target.type === "file"){
+        if (e.target.type === "file") {
             setState({
                 ...state,
                 [e.target.name]: e.target.files[0]
             })
-        }else{
+        } else {
             setState({
                 ...state,
                 [e.target.name]: e.target.value
@@ -33,12 +74,69 @@ const FormStaff = () => {
     }
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // send form data
+        setState({
+            ...state,
+            is_form_submitting: true
+        })
+
+        let formData = new FormData()
+
+    
+        await formData.append('file', state.staff_photo)
+        await formData.append('data', JSON.stringify(state))
+
+
+        let submitResponse
+        if(props.staff_id){
+            submitResponse = await api.put('/staff/update/'+props.staff_id, formData, { headers: {'content-type':'multipart/form-data'}})
+            
+            setState({
+                ...state,
+                is_form_submitting: false
+            })
+        }else{
+            submitResponse = await api.post('/staff/new', formData, { headers: {'content-type':'multipart/form-data'}})
+            resetState()
+        }
+
+        if(submitResponse.data.response){
+            Swal.fire({
+                title: 'Başarılı',
+                text: 'Personel kaydedildi',
+                icon: 'success'
+            })
+        }else{
+            Swal.fire({
+                title: 'Hata',
+                text: submitResponse.data.responseData,
+                icon: 'error'
+            })
+
+        }
+
+        
+
 
     }
+
+    // render card loader
+    let cardLoaderHtml = ''
+    if (state.is_form_submitting) {
+        cardLoaderHtml = <CardLoader />
+    }else{
+        cardLoaderHtml = ''
+    }
+
+
+    // render profile photo
+    let staffPhotoHtml = ''
+    if(state.staff_photo){
+        staffPhotoHtml = <img className="img-thumbnail" src={process.env.REACT_APP_API_ENDPOINT+"/file/"+state.staff_photo} />
+    }
+
 
     return (
         <div className="card">
@@ -59,7 +157,12 @@ const FormStaff = () => {
                             <input type="text" className="form-control" onChange={handleChange} value={state.staff_surname} name="staff_surname" id="staff_surname" placeholder="Personel soyadını giriniz" required="" />
                         </div>
                     </div>
-                    
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label for="staff_photo">Fotoğrafı (*)</label>
+                            <input type="file" className="form-control" onChange={handleChange} name="staff_photo" id="staff_photo" placeholder="Personel adını giriniz" required="" />
+                        </div>
+                    </div>
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label for="staff_birthday">Doğum Tarihi (*)</label>
@@ -92,7 +195,7 @@ const FormStaff = () => {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div className="h5 mb-4">Çalışma Bilgileri</div>
 
                     <div className="form-row">

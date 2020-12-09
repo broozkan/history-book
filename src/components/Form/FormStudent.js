@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import api from '../../services/api'
 import CardLoader from '../Loader/CardLoader'
-
+import Swal from 'sweetalert2'
+import { fixdate } from '../../services/fixdate'
 
 const FormStudent = (props) => {
 
@@ -23,6 +24,48 @@ const FormStudent = (props) => {
     })
 
 
+    useEffect(()=>{
+        if(props.student_id){
+            getStudent()
+        }
+    },[])
+
+    const getStudent = async () => {
+        setState({
+            ...state,
+            is_form_submitting: true
+        })
+
+        const student = await api.get('/student/get/'+props.student_id, {})
+
+        student.data.student_birthday = fixdate(student.data.student_birthday)
+        student.data.student_middle_school_graduation_date = fixdate(student.data.student_middle_school_graduation_date)
+        student.data.student_high_school_graduation_date = fixdate(student.data.student_high_school_graduation_date)
+
+        setState(student.data)
+        
+    }
+
+    const resetState = () => {
+        setState({
+            student_name:'',
+            student_surname:'',
+            student_father_name:'',
+            student_photo:'',
+            student_gender:'',
+            student_birthday:'',
+            student_nationality:'',
+            student_school_number:'',
+            student_book_number:'',
+            student_middle_school_graduation_date:'',
+            student_middle_school_graduation_result:'',
+            student_high_school_graduation_date:'',
+            student_high_school_graduation_result:'',
+            is_form_submitting: false
+        })
+    }
+
+
     const handleChange = (e) => {
         if(e.target.type === "file"){
             setState({
@@ -35,7 +78,7 @@ const FormStudent = (props) => {
                 [e.target.name]: e.target.value
             })
         }
-
+        console.log(state);
     }
 
 
@@ -49,44 +92,61 @@ const FormStudent = (props) => {
 
         let formData = new FormData()
 
-        if (state.student_photo) {
-            await formData.append('file', state.student_photo)
-            state.student_photo = state.student_photo.name
-        } else {
-            state.student_photo = "profile.jpg"
-        }
-
-
+    
+        await formData.append('file', state.student_photo)
         await formData.append('data', JSON.stringify(state))
+
 
         let submitResponse
         if(props.student_id){
-
+            submitResponse = await api.put('/student/update/'+props.student_id, formData, { headers: {'content-type':'multipart/form-data'}})
+            
+            setState({
+                ...state,
+                is_form_submitting: false
+            })
         }else{
             submitResponse = await api.post('/student/new', formData, { headers: {'content-type':'multipart/form-data'}})
-
-            if(submitResponse.data.response){
-                alert("Başarılı")
-            }else{
-                alert(submitResponse.data.responseData)
-
-            }
+            resetState()
         }
 
+        if(submitResponse.data.response){
+            Swal.fire({
+                title: 'Başarılı',
+                text: 'Öğrenci kaydedildi',
+                icon: 'success'
+            })
+        }else{
+            Swal.fire({
+                title: 'Hata',
+                text: submitResponse.data.responseData,
+                icon: 'error'
+            })
 
-        setState({
-            ...state,
-            is_form_submitting: false
-        })
+        }
+
+        
+
 
     }
 
+    // render card loader
     let cardLoaderHtml = ''
     if (state.is_form_submitting) {
         cardLoaderHtml = <CardLoader />
     }else{
         cardLoaderHtml = ''
     }
+
+
+    // render profile photo
+    let studentPhotoHtml = ''
+    console.log(state);
+    if(state.student_photo){
+        studentPhotoHtml = <img className="img-thumbnail" src={process.env.REACT_APP_API_ENDPOINT+"/file/"+state.student_photo} />
+    }
+
+
 
     return (
         <div class="card">
@@ -98,7 +158,11 @@ const FormStudent = (props) => {
             <div class="card-body">
                 <form id="form1" class="form-validate" novalidate="novalidate" onSubmit={handleSubmit}>
                     <div class="h5 mb-4">Kişisel Bilgileri</div>
-
+                    <div className="form-row">
+                        <div className="form-group col-md-3">
+                            {studentPhotoHtml}
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="student_name">Adı (*)</label>
@@ -124,7 +188,7 @@ const FormStudent = (props) => {
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="student_gender">Cinsiyeti (*)</label>
-                            <select className="form-control" value={state.student_gender_name} onChange={handleChange} name="student_gender" id="student_gender" required >
+                            <select className="form-control" value={state.student_gender} onChange={handleChange} name="student_gender" id="student_gender" required >
                                 <option value="" disabled selected>Cinsiyet Seçiniz</option>
                                 <option value="male">Erkek</option>
                                 <option value="female">Kadın</option>

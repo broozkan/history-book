@@ -4,6 +4,8 @@ require('dotenv').config();
 const app = express();
 
 const studentRouter = require('./Routes/Student')
+const staffRouter = require('./Routes/Staff')
+const fileRouter = require('./Routes/File')
 
 const cors = require('cors');
 
@@ -41,6 +43,8 @@ app.use(function (req, res, next) {
 
 /* routers */
 app.use('/student', studentRouter);
+app.use('/staff', staffRouter);
+app.use('/file', fileRouter);
 
 
 

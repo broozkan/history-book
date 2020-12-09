@@ -1,12 +1,28 @@
 import React from 'react'
+import HeaderAdmin from '../../../components/Header/HeaderAdmin'
+import Sidebar from '../../../components/Sidebar/Sidebar'
+import FormStudent from '../../../components/Form/FormStudent'
 
+const UpdateStudentView = (props) => {
 
-const DashboardView = (props) => {
-
-        console.log(props);
-    return(
-        <h1>Update student</h1>
+    return (
+        <>
+            <Sidebar />
+            <div className="body-inner">
+                <HeaderAdmin />
+                <section id="section1" className="background-grey">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-9">
+                            <FormStudent student_id={props.match.params.studentId} />
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            </div>
+        </>
     )
 }
 
-export default DashboardView
+export default UpdateStudentView
