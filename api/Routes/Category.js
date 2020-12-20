@@ -17,17 +17,17 @@ router.get('/list/:page', async (req, res) => {
     }
 
 
-    const aggregate = Category.aggregate([{
+    const aggregate = Category.categoryModel.aggregate([{
         $match : req.query
     }])
     
 
     const options = { 
         page: req.params.page, 
-        limit: 3
+        limit: 25
     }
     
-    Category.aggregatePaginate(aggregate, options, (err, result) => {
+    Category.categoryModel.aggregatePaginate(aggregate, options, (err, result) => {
         res.send(result)
     })
 })
@@ -35,7 +35,7 @@ router.get('/list/:page', async (req, res) => {
 // get specific category
 router.get('/get/:categoryId', async (req, res) => {
     
-    Category.findById(req.params.categoryId, (err, result) => {
+    Category.categoryModel.findById(req.params.categoryId, (err, result) => {
         res.send(result)
     })
 })
@@ -43,10 +43,9 @@ router.get('/get/:categoryId', async (req, res) => {
 
 router.post('/new', async (req, res) => {
 
-    req.body = JSON.parse(req.body.data)
 
   
-    const category = new Category({
+    const category = new Category.categoryModel({
         category_name: req.body.category_name
     })
 

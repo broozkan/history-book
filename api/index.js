@@ -3,6 +3,9 @@ require('dotenv').config();
 
 const app = express();
 
+const userRouter = require('./Routes/User')
+const postRouter = require('./Routes/Post')
+const categoryRouter = require('./Routes/Category')
 const studentRouter = require('./Routes/Student')
 const staffRouter = require('./Routes/Staff')
 const fileRouter = require('./Routes/File')
@@ -42,6 +45,9 @@ app.use(function (req, res, next) {
 
 
 /* routers */
+app.use('/user', userRouter);
+app.use('/post', postRouter);
+app.use('/category', categoryRouter);
 app.use('/student', studentRouter);
 app.use('/staff', staffRouter);
 app.use('/file', fileRouter);
