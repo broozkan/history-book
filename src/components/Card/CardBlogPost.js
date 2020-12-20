@@ -5,7 +5,7 @@ const CardBlogPost = () => {
         <div className="post-item blog-post-item border p-3">
             <div className="post-item-wrap">
                 <div className="post-image">
-                    <a href="#">
+                    <a href="/blog/detay/1">
                         <img alt="" src="images/blog/12.jpg" />
                     </a>
                     <span className="post-meta-category"><a href="#">Etkinlikler</a></span>
@@ -22,7 +22,7 @@ const CardBlogPost = () => {
                             </a>
                     </span>
                     <h2>
-                        <a href="#">
+                        <a href="/blog/detay/1">
                             20. Dönem Mezunlar Buluşması
                             </a>
                     </h2>
@@ -30,7 +30,7 @@ const CardBlogPost = () => {
                         Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus
                         commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.
                                         </p>
-                    <a href="#" className="item-link">Devamını Oku... <i className="fa fa-arrow-right"></i></a>
+                    <a href="/blog/detay/1" className="item-link">Devamını Oku... <i className="fa fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>

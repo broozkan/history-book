@@ -8,6 +8,10 @@
     height: 185px;
 }
 
+/* PORTFOLIO */
+.portfolio-item .portfolio-image{
+    max-height: 40vh;
+}
 
 /* GALLERY */
 .gallery-item{
@@ -53,4 +57,134 @@
 }
 .form-inline label{
     margin-right: 1rem;
+}
+
+/* ARCHIVE */
+.form-search-student input{
+    font-size: 1rem!important;
+}
+
+.search-tabs{
+    justify-content: center;
+}
+
+.search-detail-container.closed{
+    transition: height .3s linear;
+    height: 0px;
+    overflow: hidden;
+}
+
+
+.search-detail-container.opened{
+    transition: height .3s linear;
+    height: 20rem;
+    overflow: visible;
+}
+
+.card-clone{
+    position: absolute;
+    color: black;
+    font-size: 11px;
+    font-weight: bold;
+}
+#student-school-name-card-clone{
+    top: 47px;
+    left: 264px;
+}
+#student-name-card-clone{
+    top: 88px;
+    left: 264px;
+}
+#student-surname-card-clone{
+    top: 103px;
+    left: 264px;
+}
+
+#student-father-name-card-clone{
+    top: 117px;
+    left: 264px;
+}
+
+#student-nationality-card-clone{
+    top: 131px;
+    left: 292px;
+}
+#student-birthday-card-clone{
+    top: 145px;
+    left: 292px;
+}
+#student-school-number-card-clone{
+    top: 75px;
+    left: 264px;
+}
+
+
+/* ZOOM LOADER */
+.zoom-loader-container.closed *{ 
+    display: none;
+}
+.zoom-loader-container.closed{
+    display: flex;
+    background-color: #ffffff;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: height .3s ease;
+    height: 0vh;
+    bottom: 0;
+    z-index: 1;
+}
+.zoom-loader-container.opened{
+    display: flex;
+    background-color: #ffffff;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    transition: height .3s ease;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.btn-cancel-search{
+    float: right;
+    position: absolute!important;
+    right: 5rem;
+    top: 5rem;
+}
+
+.zoom-loader-container img{
+    margin-top: 15%;
+    z-index: 2;
+    height: 44px;
+}
+.zoom-loader-container h2{
+    margin-top: 0;
+    z-index: 2;
+}
+
+/* SEARCH RESULTS */
+
+.team-members.team-members-left .team-member .team-image{
+    width: 30%!important;
+}
+.team-member-ul{
+    list-style: none;
+    padding: 1rem;
+}
+.team-member-ul li span{
+    margin-right: 0.3rem;
+}
+
+
+/* STUDENT PROFILE */
+.student-profile .personal-informations{
+    list-style: none;
+}
+
+.student-profile .personal-informations li{
+    padding-top: 1rem ;
 }

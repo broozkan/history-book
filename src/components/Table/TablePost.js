@@ -67,12 +67,11 @@ const TablePosts = () => {
     let tableContentHtml = ''
     if (state.is_posts_loaded) {
         tableContentHtml = state.posts.map((item, index) => {
-
+            console.log(item);
             return (
                 <tr>
-                    <td>{item.post_name} {item.post_surname}</td>
-                    <td>{item.post_school_number}</td>
-                    <td>{item.post_book_number}</td>
+                    <td>{item.post_title}</td>
+                    <td>{item.post_category[0].category_name}</td>
                     <td>
                         <a href={"/admin/post/update/" + item._id}>Düzenle</a>
                         <a href="#" className="ml-2 text-danger" data-id={item._id} onClick={handleDeleteClick}>Sil</a>
@@ -93,12 +92,12 @@ const TablePosts = () => {
             <div className="card-header">
                 {loaderHtml}
                 <span class="h4">
-                    Öğrenci Listesi
+                    Yazı Listesi
                     <a href="/admin/post/new" className="btn btn-primary btn-sm float-right">
-                        <span className="fa fa-plus"></span> YENİ ÖĞRENCİ EKLE
+                        <span className="fa fa-plus"></span> YENİ YAZI EKLE
                     </a>
                 </span>
-                <p class="text-muted">Sistemdeki tüm öğrencilerin listesidir. Silme, düzenleme işlemleri yapabilirsiniz</p>
+                <p class="text-muted">Sistemdeki tüm yazıların listesidir. Silme, düzenleme işlemleri yapabilirsiniz</p>
             </div>
             <div className="card-body">
                 <div className="row table-query-row">
@@ -117,9 +116,9 @@ const TablePosts = () => {
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th scope="col">Adı Soyadı</th>
-                                <th scope="col">Okul Numarası</th>
-                                <th scope="col">Sicil Numarası</th>
+                                <th scope="col">Yazı</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col"></th>
                                 <th scope="col">İşlem</th>
                             </tr>
                         </thead>

@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
+import studentsPhoto from '../../images/students.jpg'
+import teachersPhoto from '../../images/teachers.jpg'
+import PortfolioItem from '../Portfolio/PortfolioItem'
 
 const Header = (props) => {
 
@@ -9,20 +11,20 @@ const Header = (props) => {
         header_class: ""
     })
 
-    
+
     const location = useLocation()
 
     useEffect(() => {
-        if(location.pathname === "/"){
+        if (location.pathname === "/") {
             setState({
                 header_class: "dark"
             })
         }
     }, [])
-    
+
 
     return (
-        <header id="header" data-transparent="true" className={state.header_class+" submenu-light"}>
+        <header id="header" data-transparent="true" className={state.header_class + " submenu-light"}>
             <div className="header-inner">
                 <div className="container">
 
@@ -66,7 +68,7 @@ const Header = (props) => {
                                     <li><a href="/nedir">NEDİR?</a></li>
                                     <li><a href="/blog">KÖŞE YAZILARI</a></li>
                                     <li className="dropdown mega-menu-item">
-                                        <a href="#">ARŞİV</a>
+                                        <a href="/arsiv">ARŞİV</a>
                                         <ul className="dropdown-menu">
                                             <li className="mega-menu-content">
                                                 <div className="row">
@@ -76,32 +78,19 @@ const Header = (props) => {
                                                         <div className="row filter-by">
                                                             <div class="portfolio-2-columns">
 
-                                                                <div class="portfolio-item text-bottom">
-                                                                    <div class="portfolio-item-wrap">
-                                                                        <div class="portfolio-image">
-                                                                            <a href="#"><img src="images/header/students.jpg" alt="" /></a>
-                                                                        </div>
-                                                                        <div class="portfolio-description">
-                                                                            <a href="portfolio-page-grid-gallery.html">
-                                                                                <h3>ÖĞRENCİLERE GÖRE ARAMA YAP</h3>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                <PortfolioItem
+                                                                    photo={studentsPhoto}
+                                                                    title="ÖĞRENCİLERE GÖRE ARAMA YAP"
+                                                                    href="/arsiv/ogrenci-ara"
 
+                                                                />
 
-                                                                <div class="portfolio-item text-bottom">
-                                                                    <div class="portfolio-item-wrap">
-                                                                        <div class="portfolio-image">
-                                                                            <a href="#"><img src="images/header/teachers.jpg" alt="" /></a>
-                                                                        </div>
-                                                                        <div class="portfolio-description">
-                                                                            <a href="portfolio-page-grid-gallery.html">
-                                                                                <h3>ÖĞRETMENLERE GÖRE ARAMA YAP</h3>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                <PortfolioItem
+                                                                    photo={teachersPhoto}
+                                                                    title="PERSONELLERE GÖRE ARAMA YAP"
+                                                                    href="/arsiv/personel-ara"
+                                                                />
+
 
 
                                                             </div>

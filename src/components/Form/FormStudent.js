@@ -38,6 +38,7 @@ const FormStudent = (props) => {
 
         const student = await api.get('/student/get/'+props.student_id, {})
 
+        console.log(student.data.student_high_school_graduation_date);
         student.data.student_birthday = fixdate(student.data.student_birthday)
         student.data.student_middle_school_graduation_date = fixdate(student.data.student_middle_school_graduation_date)
         student.data.student_high_school_graduation_date = fixdate(student.data.student_high_school_graduation_date)

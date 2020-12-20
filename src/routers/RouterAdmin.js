@@ -19,6 +19,7 @@ import UpdateStaffView from '../views/admin/Staff/UpdateStaffView'
 import PostListView from '../views/admin/Post/PostListView'
 import NewPostView from '../views/admin/Post/NewPostView'
 import UpdatePostView from '../views/admin/Post/UpdatePostView'
+import LoginView from '../views/admin/User/LoginView'
 
 const RouterAdmin = () => {
     const location = useLocation()
@@ -30,6 +31,8 @@ const RouterAdmin = () => {
             
             <Switch>
                 <Route path="/admin" exact component={DashboardView}></Route>
+
+                <Route path="/admin/user/login" exact component={LoginView}></Route>
                 
                 <Route path="/admin/student/new" exact component={NewStudentView}></Route>
                 <Route path="/admin/student/list" exact component={StudentListView}></Route>
