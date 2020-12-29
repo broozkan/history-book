@@ -9,6 +9,7 @@ const categoryRouter = require('./Routes/Category')
 const studentRouter = require('./Routes/Student')
 const staffRouter = require('./Routes/Staff')
 const fileRouter = require('./Routes/File')
+const excelRouter = require('./Routes/Excel')
 
 const cors = require('cors');
 
@@ -51,6 +52,7 @@ app.use('/category', categoryRouter);
 app.use('/student', studentRouter);
 app.use('/staff', staffRouter);
 app.use('/file', fileRouter);
+app.use('/excel', excelRouter);
 
 
 

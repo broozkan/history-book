@@ -29,7 +29,7 @@ router.get('/list/:page', async (req, res) => {
 
     const options = { 
         page: req.params.page, 
-        limit: 3
+        limit: 25
     }
     
     Student.aggregatePaginate(aggregate, options, (err, result) => {
@@ -81,39 +81,23 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
 
 
 
-    const student = new Student({
-        student_name: req.body.student_name,
-        student_surname: req.body.student_surname,
-        student_father_name: req.body.student_father_name,
-        student_photo: req.body.student_photo,
-        student_gender: req.body.student_gender,
-        student_birthday: req.body.student_birthday,
-        student_nationality: req.body.student_nationality,
-        student_school_number: req.body.student_school_number,
-        student_book_number: req.body.student_book_number,
-        student_middle_school_graduation_date: req.body.student_middle_school_graduation_date,
-        student_middle_school_graduation_result: req.body.student_middle_school_graduation_result,
-        student_high_school_graduation_date: req.body.student_high_school_graduation_date,
-        student_high_school_graduation_result: req.body.student_high_school_graduation_result
-    })
-
-    const savedStudent = student.save((err) => {
-        if (err) {
-            console.log(err);
+    newStudent(req.body,(result)=>{
+        if(result.status == false){
             res.send({
                 response: false,
-                responseData: err.message
+                responseData: result.err.message
             })
-        } else {
+        }else{
             res.send({
                 response: true,
-                responseData: student
+                responseData: result
             })
-
+           
         }
     })
 
 })
+
 
 
 router.put('/update/:studentId', MultipartyMiddleware, async (req, res) => {
@@ -162,10 +146,10 @@ router.put('/update/:studentId', MultipartyMiddleware, async (req, res) => {
         student_birthday: req.body.student_birthday,
         student_nationality: req.body.student_nationality,
         student_school_number: req.body.student_school_number,
-        student_book_number: req.body.student_book_number,
-        student_middle_school_graduation_date: req.body.student_middle_school_graduation_date,
+        student_education_beginning_year: req.body.student_education_beginning_year,
+        student_education_ending_year: req.body.student_education_ending_year,
         student_middle_school_graduation_result: req.body.student_middle_school_graduation_result,
-        student_high_school_graduation_date: req.body.student_high_school_graduation_date,
+        student_high_school_graduation_exam: req.body.student_high_school_graduation_exam,
         student_high_school_graduation_result: req.body.student_high_school_graduation_result
     }
 
@@ -186,6 +170,24 @@ router.put('/update/:studentId', MultipartyMiddleware, async (req, res) => {
 })
 
 
+router.get('/delete-all-students', async (req, res) => {
+ 
+    await Student.deleteMany({}, (err) => {
+        if (err) {
+            res.send({
+                response: false,
+                responseData: err
+            })
+        } else {
+            res.send({
+                response: true,
+                responseData: "Başarılı"
+            })
+        }
+    })
+
+})
+
 router.delete('/delete/:studentId', async (req, res) => {
     
     await Student.deleteOne({ _id: req.params.studentId }, (err) => {
@@ -205,4 +207,43 @@ router.delete('/delete/:studentId', async (req, res) => {
 })
 
 
+const newStudent = async (data, callBack) => {
+
+  
+
+    const student = new Student({
+        student_name: data.student_name,
+        student_surname: data.student_surname,
+        student_father_name: data.student_father_name,
+        student_photo: data.student_photo,
+        student_gender: data.student_gender,
+        student_birthday: data.student_birthday,
+        student_nationality: data.student_nationality,
+        student_school_number: data.student_school_number,
+        student_education_beginning_year: data.student_education_beginning_year,
+        student_education_ending_year: data.student_education_ending_year,
+        student_middle_school_graduation_result: data.student_middle_school_graduation_result,
+        student_high_school_graduation_exam: data.student_high_school_graduation_exam,
+        student_high_school_graduation_result: data.student_high_school_graduation_result
+    })
+   // console.log(student);
+    const savedStudent = await student.save((err) => {
+        let response
+        if (err) {
+            response = {
+                status: false,
+                err: err
+            }
+        } else {
+            response = {
+                status: true,
+                data: student
+            }
+
+        }
+        callBack(response)
+    })
+}
+
 module.exports = router;
+module.exports.newStudent = newStudent;

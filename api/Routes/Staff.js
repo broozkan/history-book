@@ -29,7 +29,7 @@ router.get('/list/:page', async (req, res) => {
 
     const options = { 
         page: req.params.page, 
-        limit: 3
+        limit: 25
     }
     
     Staff.aggregatePaginate(aggregate, options, (err, result) => {
@@ -79,37 +79,21 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
     }
   
 
-
-
-    const staff = new Staff({
-        staff_name: req.body.staff_name,
-        staff_surname: req.body.staff_surname,
-        staff_photo: req.body.staff_photo,
-        staff_birthday: req.body.staff_birthday,
-        staff_nationality: req.body.staff_nationality,
-        staff_country: req.body.staff_country,
-        staff_gender: req.body.staff_gender,
-        staff_duty: req.body.staff_duty,
-        staff_branch: req.body.staff_branch,
-        staff_duty_beginning_date: req.body.staff_duty_beginning_date,
-        staff_duty_ending_date: req.body.staff_duty_ending_date
-    })
-
-    const savedStaff = staff.save((err) => {
-        if (err) {
-            console.log(err);
+    newStaff(req.body,(result)=>{
+        if(result.status == false){
             res.send({
                 response: false,
-                responseData: err.message
+                responseData: result.err.message
             })
-        } else {
+        }else{
             res.send({
                 response: true,
-                responseData: staff
+                responseData: result
             })
-
+           
         }
     })
+
 
 })
 
@@ -182,6 +166,25 @@ router.put('/update/:staffId', MultipartyMiddleware, async (req, res) => {
 })
 
 
+router.get('/delete-all-staffs', async (req, res) => {
+ 
+    await Staff.deleteMany({}, (err) => {
+        if (err) {
+            res.send({
+                response: false,
+                responseData: err
+            })
+        } else {
+            res.send({
+                response: true,
+                responseData: "Başarılı"
+            })
+        }
+    })
+
+})
+
+
 router.delete('/delete/:staffId', async (req, res) => {
     
     await Staff.deleteOne({ _id: req.params.staffId }, (err) => {
@@ -201,4 +204,44 @@ router.delete('/delete/:staffId', async (req, res) => {
 })
 
 
+
+
+
+const newStaff = async (data, callBack) => {
+
+    const staff = new Staff({
+        staff_name: data.staff_name,
+        staff_surname: data.staff_surname,
+        staff_photo: data.staff_photo,
+        staff_birthday: data.staff_birthday,
+        staff_nationality: data.staff_nationality,
+        staff_country: data.staff_country,
+        staff_gender: data.staff_gender,
+        staff_duty: data.staff_duty,
+        staff_branch: data.staff_branch,
+        staff_duty_beginning_date: data.staff_duty_beginning_date,
+        staff_duty_ending_date: data.staff_duty_ending_date
+    })
+
+   // console.log(staff);
+    const savedStaff = await staff.save((err) => {
+        let response
+        if (err) {
+            response = {
+                status: false,
+                err: err
+            }
+        } else {
+            response = {
+                status: true,
+                data: staff
+            }
+
+        }
+        callBack(response)
+    })
+}
+
+
 module.exports = router;
+module.exports.newStaff = newStaff;

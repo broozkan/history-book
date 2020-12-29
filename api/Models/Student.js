@@ -4,15 +4,15 @@ var aggregatePaginate = require("mongoose-aggregate-paginate-v2")
 const studentSchema = mongoose.Schema({
     student_name: {
         type: String,
-        required: [true, "Öğrenci adı zorunludur"]
+        required: false
     },
     student_surname: {
         type: String,
-        required: [true, "Öğrenci soyadı zorunludur"]
+        required: false
     },
     student_father_name: {
         type: String,
-        required: [true, "Öğrenci baba adı zorunludur"]
+        required: false
     },
     student_photo: {
         type: String,
@@ -20,39 +20,39 @@ const studentSchema = mongoose.Schema({
     },
     student_gender: {
         type: String,
-        required: [true, "Öğrenci cinsiyeti zorunludur"]
+        required: false
     },
     student_birthday: {
-        type: Date,
-        required: [true, "Öğrenci doğum günü zorunludur"]
+        type: String,
+        required: false
     },
     student_nationality: {
         type: String,
-        required: [true, "Öğrenci uyruğu zorunludur"]
+        required: false
     },
     student_school_number: {
         type: String,
-        required: [true, "Öğrenci okul numarası zorunludur"]
-    },
-    student_book_number: {
-        type: String,
-        required: [true, "Öğrenci sicil numarası zorunludur"]
-    },
-    student_middle_school_graduation_date: {
-        type: Date,
-        required: [true, "Öğrenci orta okul mezuniyet tarihi zorunludur"]
+        required: false
     },
     student_middle_school_graduation_result: {
         type: String,
-        required: [true, "Öğrenci orta okul mezuniyet durumu zorunludur"]
+        required: false
     },
-    student_high_school_graduation_date: {
-        type: Date,
-        required: [true, "Öğrenci lise mezuniyet tarihi zorunludur"]
+    student_education_beginning_year: {
+        type: String,
+        required: false
+    },
+    student_education_ending_year: {
+        type: String,
+        required: false
+    },
+    student_high_school_graduation_exam: {
+        type: String,
+        required: false
     },
     student_high_school_graduation_result: {
         type: String,
-        required: [true, "Öğrenci lise mezuniyet durumu zorunludur"]
+        required: false
     }
 })
 

@@ -4,47 +4,47 @@ var aggregatePaginate = require("mongoose-aggregate-paginate-v2")
 const staffSchema = mongoose.Schema({
     staff_name: {
         type: String,
-        required: [true, "Personel adı zorunludur"]
+        required: false
     },
     staff_surname: {
         type: String,
-        required: [true, "Personel soyadı zorunludur"]
+        required: false
     },
     staff_photo: {
         type: String,
-        required: [true, "Personel fotoğrafı zorunludur"]
+        required: false
     },
     staff_birthday: {
         type: Date,
-        required: [true, "Personel doğum günü zorunludur"]
+        required: false
     },
     staff_nationality: {
         type: String,
-        required: [true, "Personel uyruğu zorunludur"]
+        required: false
     },
     staff_country: {
         type: String,
-        required: [true, "Personel doğum yeri zorunludur"]
+        required: false
     },
     staff_gender: {
         type: String,
-        required: [true, "Personel cinsiyeti zorunludur"]
+        required: false
     },
     staff_duty: {
         type: String,
-        required: [true, "Personel görevi zorunludur"]
+        required: false
     },
     staff_branch: {
         type: String,
-        required: [true, "Personel branşı zorunludur"]
+        required: false
     },
     staff_duty_beginning_date: {
         type: Date,
-        required: [true, "Personel görev başlangıç tarihi zorunludur"]
+        required: false
     },
     staff_duty_ending_date: {
         type: Date,
-        required: [true, "Personel görev bitiş tarihi zorunludur"]
+        required: false
     }
 })
 
