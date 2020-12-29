@@ -94,6 +94,9 @@ const TableStaffs = () => {
                 {loaderHtml}
                 <span class="h4">
                     Personel Listesi
+                    <a href="/admin/excel/import/staff" className="btn btn-outline btn-dark btn-sm float-right ml-2">
+                        <span className="fa fa-file-excel"></span> EXCEL'DEN AKTAR
+                    </a>
                     <a href="/admin/staff/new" className="btn btn-primary btn-sm float-right">
                         <span className="fa fa-plus"></span> YENİ PERSONEL EKLE
                     </a>

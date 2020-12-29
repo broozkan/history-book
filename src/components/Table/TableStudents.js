@@ -94,9 +94,14 @@ const TableStudents = () => {
                 {loaderHtml}
                 <span class="h4">
                     Öğrenci Listesi
+                    
+                    <a href="/admin/excel/import/student" className="btn btn-outline btn-dark btn-sm float-right ml-2">
+                        <span className="fa fa-file-excel"></span> EXCEL'DEN AKTAR
+                    </a>
                     <a href="/admin/student/new" className="btn btn-primary btn-sm float-right">
                         <span className="fa fa-plus"></span> YENİ ÖĞRENCİ EKLE
                     </a>
+                    
                 </span>
                 <p class="text-muted">Sistemdeki tüm öğrencilerin listesidir. Silme, düzenleme işlemleri yapabilirsiniz</p>
             </div>

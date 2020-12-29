@@ -15,10 +15,10 @@ const FormStudent = (props) => {
         student_birthday:'',
         student_nationality:'',
         student_school_number:'',
-        student_book_number:'',
-        student_middle_school_graduation_date:'',
+        student_education_beginning_year:'',
+        student_education_ending_year:'',
         student_middle_school_graduation_result:'',
-        student_high_school_graduation_date:'',
+        student_high_school_graduation_exam:'',
         student_high_school_graduation_result:'',
         is_form_submitting: false
     })
@@ -38,10 +38,7 @@ const FormStudent = (props) => {
 
         const student = await api.get('/student/get/'+props.student_id, {})
 
-        console.log(student.data.student_high_school_graduation_date);
         student.data.student_birthday = fixdate(student.data.student_birthday)
-        student.data.student_middle_school_graduation_date = fixdate(student.data.student_middle_school_graduation_date)
-        student.data.student_high_school_graduation_date = fixdate(student.data.student_high_school_graduation_date)
 
         setState(student.data)
         
@@ -57,12 +54,11 @@ const FormStudent = (props) => {
             student_birthday:'',
             student_nationality:'',
             student_school_number:'',
-            student_book_number:'',
-            student_middle_school_graduation_date:'',
+            student_education_beginning_year:'',
+            student_education_ending_year:'',
             student_middle_school_graduation_result:'',
-            student_high_school_graduation_date:'',
+            student_high_school_graduation_exam:'',
             student_high_school_graduation_result:'',
-            is_form_submitting: false
         })
     }
 
@@ -216,25 +212,27 @@ const FormStudent = (props) => {
                             <label for="student_school_number">Okul Numarası (*)</label>
                             <input type="text" class="form-control" value={state.student_school_number} onChange={handleChange} name="student_school_number" id="student_school_number" placeholder="Öğrenci okul numarasını giriniz"  required="" />
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="student_book_number">Sicil Numarası (*)</label>
-                            <input type="text" class="form-control" value={state.student_book_number} onChange={handleChange} name="student_book_number" id="student_book_number" placeholder="Öğrenci sicil numarasını giriniz" required="" />
-                        </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="student_middle_school_graduation_date">Ortaokul Mezuniyet Tarihi (*)</label>
-                            <input type="date" class="form-control" value={state.student_middle_school_graduation_date} onChange={handleChange} name="student_middle_school_graduation_date" id="student_middle_school_graduation_date" placeholder="Öğrenci ortaokul mezuniyet tarihini giriniz"  required="" />
-                        </div>
                         <div class="form-group col-md-6">
                             <label for="student_middle_school_graduation_result">Ortaokul Mezuniyet Sonucu (*)</label>
-                            <input type="text" class="form-control" value={state.student_middle_school_graduation_result} onChange={handleChange} name="student_middle_school_graduation_result" id="student_middle_school_graduation_result" placeholder="Öğrenci ortaokul mezuniyet sonucunu giriniz" required="" />
+                            <input type="text" class="form-control" value={state.student_middle_school_graduation_result} onChange={handleChange} name="student_middle_school_graduation_result" id="student_middle_school_graduation_result" placeholder="Öğrenci lise mezuniyet sonucunu giriniz" required="" />
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="student_high_school_graduation_date">Lise Mezuniyet Tarihi (*)</label>
-                            <input type="date" class="form-control" value={state.student_high_school_graduation_date} onChange={handleChange} name="student_high_school_graduation_date" id="student_high_school_graduation_date" placeholder="Öğrenci lise mezuniyet tarihini giriniz"  required="" />
+                            <label for="student_education_beginning_year">Öğretim Dönemi Başlangıç Yılı (*)</label>
+                            <input type="text" class="form-control" value={state.student_education_beginning_year} onChange={handleChange} name="student_education_beginning_year" id="student_education_beginning_year" placeholder="Öğrenci lise mezuniyet tarihini giriniz"  required="" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="student_education_ending_year">Öğretim Dönemi Bitiş Yılı (*)</label>
+                            <input type="text" class="form-control" value={state.student_education_ending_year} onChange={handleChange} name="student_education_ending_year" id="student_education_ending_year" placeholder="Öğrenci lise mezuniyet tarihini giriniz"  required="" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="student_high_school_graduation_exam">Lise Mezuniyet İmtihanı (*)</label>
+                            <input type="text" class="form-control" value={state.student_high_school_graduation_exam} onChange={handleChange} name="student_high_school_graduation_exam" id="student_high_school_graduation_exam" placeholder="Öğrenci lise mezuniyet tarihini giriniz"  required="" />
                         </div>
                         <div class="form-group col-md-6">
                             <label for="student_high_school_graduation_result">Lise Mezuniyet Sonucu (*)</label>

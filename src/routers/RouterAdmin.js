@@ -20,6 +20,8 @@ import PostListView from '../views/admin/Post/PostListView'
 import NewPostView from '../views/admin/Post/NewPostView'
 import UpdatePostView from '../views/admin/Post/UpdatePostView'
 import LoginView from '../views/admin/User/LoginView'
+import ImportStudentsFromExcelView from '../views/admin/Excel/ImportStudentsFromExcelView'
+import ImportStaffsFromExcelView from '../views/admin/Excel/ImportStaffsFromExcelView'
 
 const RouterAdmin = () => {
     const location = useLocation()
@@ -45,6 +47,10 @@ const RouterAdmin = () => {
                 <Route path="/admin/post/list" exact component={PostListView}></Route>
                 <Route path="/admin/post/new" exact component={NewPostView}></Route>
                 <Route path="/admin/post/update/:postId" exact component={UpdatePostView}></Route>
+
+                <Route path="/admin/excel/import/student" exact component={ImportStudentsFromExcelView}></Route>
+                <Route path="/admin/excel/import/staff" exact component={ImportStaffsFromExcelView}></Route>
+
             </Switch>
         </Router>
         </body>

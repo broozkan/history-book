@@ -51,9 +51,7 @@ const FormStaff = (props) => {
 
         const staff = await api.get('/staff/get/' + props.staff_id, {})
 
-        staff.data.staff_birthday = fixdate(staff.data.staff_birthday)
-        staff.data.staff_duty_beginning_date = fixdate(staff.data.staff_duty_beginning_date)
-        staff.data.staff_duty_ending_date = fixdate(staff.data.staff_duty_ending_date)
+     
 
         setState(staff.data)
 
