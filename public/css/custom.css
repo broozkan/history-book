@@ -63,7 +63,9 @@
 .form-search-student input{
     font-size: 1rem!important;
 }
-
+.form-search-staff input{
+    font-size: 1rem!important;
+}
 .search-tabs{
     justify-content: center;
 }
@@ -74,12 +76,19 @@
     overflow: hidden;
 }
 
-
-.search-detail-container.opened{
+.form-search-student .search-detail-container.opened{
     transition: height .3s linear;
     height: 20rem;
     overflow: visible;
 }
+
+.form-search-staff .search-detail-container.opened{
+    transition: height .3s linear;
+    height: 23rem;
+    overflow: visible;
+}
+
+
 
 .card-clone{
     position: absolute;
@@ -167,7 +176,6 @@
 }
 
 /* SEARCH RESULTS */
-
 .team-members.team-members-left .team-member .team-image{
     width: 30%!important;
 }
@@ -188,3 +196,4 @@
 .student-profile .personal-informations li{
     padding-top: 1rem ;
 }
+
