@@ -8,7 +8,7 @@ const SectionLastArticles = () => {
 
 
     return (
-        <section id="section4" className="background-grey">
+        <section id="section4">
             <div className="container">
                 <div className="heading-text heading-section text-center m-b-40">
                     <h2 className="m-b-0">OUR BLOG</h2>

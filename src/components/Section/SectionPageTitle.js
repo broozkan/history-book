@@ -1,7 +1,7 @@
 import React from 'react'
 import bg from '../../images/14.jpg'
 
-const SectionPageTitle = () => {
+const SectionPageTitle = (props) => {
 
     return (
         <section id="page-title" data-bg-parallax={bg}>
@@ -9,8 +9,8 @@ const SectionPageTitle = () => {
             <div class="bg-overlay"></div>
             <div class="container">
                 <div class="page-title">
-                    <h1 class="text-uppercase text-medium">SAYFA BAŞLIĞI</h1>
-                    <span>İçerik ile ilgili bilgilendirme</span>
+                    <h1 class="text-uppercase text-medium">{props.page_title}</h1>
+                    <span>{props.page_description}</span>
                 </div>
             </div>
         </section>

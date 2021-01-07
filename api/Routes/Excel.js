@@ -36,13 +36,18 @@ router.post('/import/staff', MultipartyMiddleware, async (req, res) => {
                                 return
                             }
     
-                            if (item[req.body.staff_education_year_column] != null) {
+                            if (item[req.body.staff_duty_year_column] != null) {
                                 item["staff_duty_beginning_year"] = item[req.body.staff_duty_year_column].split('-')[0]
                                 item["staff_duty_ending_year"] = item[req.body.staff_duty_year_column].split('-')[1]
+                            }else{
+                                
                             }
     
+                       
                             if (item[req.body.staff_name_surname_column] != null) {
-                                const splittedNameSurname = item[req.body.staff_name_surname_column].split(' ')
+
+                                const nameSurname = item[req.body.staff_name_surname_column].trim()
+                                const splittedNameSurname = nameSurname.split(' ')
                                 if (splittedNameSurname.length > 2) {
                                     item["staff_name"] = ''
                                     splittedNameSurname.forEach((element, nameIndex) => {
@@ -57,7 +62,6 @@ router.post('/import/staff', MultipartyMiddleware, async (req, res) => {
                                     item["staff_surname"] = splittedNameSurname[1]
                                 }
                             }
-
                          
                             
 
@@ -66,6 +70,7 @@ router.post('/import/staff', MultipartyMiddleware, async (req, res) => {
                                 staff_surname: item["staff_surname"],
                                 staff_birthday: item[req.body.staff_birthday_column],
                                 staff_country: item[req.body.staff_country_column],
+                                staff_father_name: item[req.body.staff_father_name_column],
                                 staff_gender: item[req.body.staff_gender_column],
                                 staff_duty: item[req.body.staff_duty_column],
                                 staff_branch: item[req.body.staff_branch_column],
@@ -74,7 +79,7 @@ router.post('/import/staff', MultipartyMiddleware, async (req, res) => {
 
                             }
 
-
+                     
 
                             await StaffRouter.newStaff(staffData, async (result) => {
                                 if (result.status) {

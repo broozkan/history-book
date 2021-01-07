@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import studentsPhoto from '../../images/students.jpg'
 import teachersPhoto from '../../images/teachers.jpg'
 import PortfolioItem from '../Portfolio/PortfolioItem'
+import { SiteUserContext } from '../../contexts/SiteUserContext'
 
 const Header = (props) => {
 
@@ -12,9 +13,11 @@ const Header = (props) => {
     })
 
 
+    const siteUserContext = useContext(SiteUserContext)
     const location = useLocation()
 
     useEffect(() => {
+
         if (location.pathname === "/") {
             setState({
                 header_class: "dark"
@@ -22,36 +25,55 @@ const Header = (props) => {
         }
     }, [])
 
+    // render user profile content
+    let userFieldHtml = ''
+    if (siteUserContext.state.is_logged_in) {
+        console.log(siteUserContext);
+        userFieldHtml = (
+            <div className="p-dropdown">
+                <a href="#">
+                    <button className="btn btn-light btn-outline">
+                        {siteUserContext.state.user.user_name}
+                    </button>
+
+                </a>
+                <ul className="p-dropdown-content">
+                    <li><a href="/profile">Profil</a></li>
+                    <hr></hr>
+                    <li><a href="/logout">Çıkış Yap</a></li>
+                </ul>
+            </div>
+
+        )
+    } else {
+        userFieldHtml = (
+            <>
+                <a href="/login">
+                    <button className="btn btn-light btn-outline">GİRİŞ YAP</button>
+                </a>
+             
+            </>
+        )
+    }
 
     return (
         <header id="header" data-transparent="true" className={state.header_class + " submenu-light"}>
             <div className="header-inner">
                 <div className="container">
 
-                    <div id="logo"> <a href="index.html"><span className="logo-default">sivaslisesi.com</span><span
-                        className="logo-dark">sivaslisesi.com</span></a> </div>
-
-
-                    <div id="search"><a id="btn-search-close" className="btn-search-close" aria-label="Close search form"><i
-                        className="icon-x"></i></a>
-                        <form className="search-form" action="https://inspirothemes.com/polo/search-results-page.html"
-                            method="get">
-                            <input className="form-control" name="q" type="text" placeholder="Type & Search..." />
-                            <span className="text-muted">Start typing & press "Enter" or "ESC" to close</span>
-                        </form>
+                    <div id="logo">
+                        <a href="/">
+                            <span className="logo-default">sivaslisesi.com</span>
+                            <span className="logo-dark">sivaslisesi.com</span>
+                        </a>
                     </div>
+
+
 
                     <div className="header-extras">
                         <ul>
-                            <li> <a id="btn-search" href="#"> <i className="icon-search"></i></a> </li>
                             <li>
-                                <div className="p-dropdown"> <a href="#"><i className="icon-globe"></i><span>EN</span></a>
-                                    <ul className="p-dropdown-content">
-                                        <li><a href="#">French</a></li>
-                                        <li><a href="#">Spanish</a></li>
-                                        <li><a href="#">English</a></li>
-                                    </ul>
-                                </div>
+                                {userFieldHtml}
                             </li>
                         </ul>
                     </div>
@@ -81,14 +103,14 @@ const Header = (props) => {
                                                                 <PortfolioItem
                                                                     photo={studentsPhoto}
                                                                     title="ÖĞRENCİLERE GÖRE ARAMA YAP"
-                                                                    href="/arsiv/ogrenci-ara"
+                                                                    href="/arsiv/ara/ogrenci"
 
                                                                 />
 
                                                                 <PortfolioItem
                                                                     photo={teachersPhoto}
                                                                     title="PERSONELLERE GÖRE ARAMA YAP"
-                                                                    href="/arsiv/personel-ara"
+                                                                    href="/arsiv/ara/personel"
                                                                 />
 
 

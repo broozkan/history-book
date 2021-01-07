@@ -10,6 +10,10 @@ const studentRouter = require('./Routes/Student')
 const staffRouter = require('./Routes/Staff')
 const fileRouter = require('./Routes/File')
 const excelRouter = require('./Routes/Excel')
+const stockSearchRouter = require('./Routes/StockSearch')
+const studentCommentRouter = require('./Routes/StudentComment')
+const studentRemoveRequestRouter = require('./Routes/StudentRemoveRequest')
+const studentVerifyRequestRouter = require('./Routes/StudentVerifyRequest')
 
 const cors = require('cors');
 
@@ -53,6 +57,10 @@ app.use('/student', studentRouter);
 app.use('/staff', staffRouter);
 app.use('/file', fileRouter);
 app.use('/excel', excelRouter);
+app.use('/stock-search', stockSearchRouter);
+app.use('/student-comment', studentCommentRouter);
+app.use('/student-remove-request', studentRemoveRequestRouter);
+app.use('/student-verify-request', studentVerifyRequestRouter);
 
 
 

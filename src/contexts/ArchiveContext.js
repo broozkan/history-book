@@ -6,16 +6,22 @@ export const ArchiveContextWrapper = (props) => {
 
 
     const [state, setState] = useState({
-        search_results: []
+        search_results: [],
+        object: '',
+        is_commenting: false
     })
 
 
-    const updateState = (key, val) => {
+    const updateState = (key, val, callBack) => {
         setState({
             ...state,
             [key] : val
         })
+
+        callBack(state)
     }
+
+    console.log(state);
 
     return(
         <ArchiveContext.Provider value={{state: state, updateState: updateState}}>

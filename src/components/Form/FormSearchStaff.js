@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ArchiveContextWrapper, ArchiveContext } from '../../contexts/ArchiveContext'
-import BookLoader from '../Loader/ZoomLoader'
+import BookLoader from '../Loader/BookLoader'
+import api from '../../services/api'
+import { useHistory } from "react-router-dom"
 
 const FormSearchStaff = () => {
 
@@ -10,7 +12,7 @@ const FormSearchStaff = () => {
         staff_name: '',
         staff_surname: '',
         staff_father_name: '',
-        staff_gender: 'male',
+        staff_gender: '',
         staff_birthday: '',
         staff_nationality: '',
         staff_duty: '',
@@ -21,7 +23,11 @@ const FormSearchStaff = () => {
 
 
     const archiveContext = useContext(ArchiveContext)
+    let history = useHistory();
 
+    useEffect(()=>{
+        archiveContext.updateState('object','staff', () => {})
+    },[])
 
     const handleOnChange = (e) => {
         setState({
@@ -46,7 +52,7 @@ const FormSearchStaff = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         setState({
@@ -54,9 +60,49 @@ const FormSearchStaff = () => {
             is_loading: true
         })
 
-        console.log(state);
+
+        const filters = {
+            staff_name: state.staff_name,
+            staff_surname: state.staff_surname,
+            staff_father_name: state.staff_father_name,
+            staff_gender: state.staff_gender,
+            staff_birthday: state.staff_birthday,
+            staff_nationality: state.staff_nationality,
+            staff_duty: state.staff_duty,
+            staff_branch: state.staff_branch,
+            staff_duty_beginning_date: state.staff_duty_beginning_date,
+            staff_duty_ending_date: state.staff_duty_ending_date
+        }
+
+        const staffs = await  api.get('/staff/list/1', { params: filters, headers: {'site-token': localStorage.getItem('site-token')} })
 
 
+        console.log(staffs);
+        await archiveContext.updateState("search_results", staffs.data.docs, (res) => {
+            setTimeout(function () {
+                setState({
+                    ...state,
+                    is_loading: false
+                })
+                history.push('/arsiv/arama-sonuclari')
+            }, 3000)
+
+        })
+
+
+        // setTimeout(function () {
+        //     console.log(archiveContext.state)
+        //     if (archiveContext.state.is_commenting) {
+
+        //     }else{
+        //         setState({
+        //             ...state,
+        //             is_loading: false
+        //         })
+        //     }
+
+
+        // }, 3000)
 
     }
 

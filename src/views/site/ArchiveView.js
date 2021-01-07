@@ -7,9 +7,9 @@ import teachersPhoto from '../../images/teachers.jpg'
 
 
 const ArchiveView = () => {
-    return(
+    return (
         <>
-            <SectionPageTitle/>
+            <SectionPageTitle page_title="ARŞİV"  />
             <section id="page-content">
                 <div className="container">
 
@@ -17,29 +17,29 @@ const ArchiveView = () => {
 
                         <div id="blog" className="post-3-columns m-b-30" data-item="post-item">
 
-                            
-                        <div className="row">
-                        <div className="col-lg-12">
-                            <div className="heading-text heading-section">
-                                <h2>Aramanızı neye göre yapmak istersiniz?</h2>
-                                <div className="portfolio-2-columns">
-                                    <PortfolioItem 
-                                        photo={studentsPhoto}
-                                        title="ÖĞRENCİLERE GÖRE ARAMA YAP"
-                                        href="/arsiv/ogrenci-ara"
 
-                                    />
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="heading-text heading-section">
+                                        <h2>Aramanızı neye göre yapmak istersiniz?</h2>
+                                        <div className="portfolio-2-columns">
+                                            <PortfolioItem
+                                                photo={studentsPhoto}
+                                                title="ÖĞRENCİLERE GÖRE ARAMA YAP"
+                                                href="/arsiv/ara/ogrenci"
 
-                                    <PortfolioItem
-                                        photo={teachersPhoto}
-                                        title="PERSONELLERE GÖRE ARAMA YAP"
-                                        href="/arsiv/personel-ara"
-                                    />
+                                            />
+
+                                            <PortfolioItem
+                                                photo={teachersPhoto}
+                                                title="PERSONELLERE GÖRE ARAMA YAP"
+                                                href="/arsiv/ara/personel"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
-                        </div>
-                        
-                    </div>
 
                         </div>
 

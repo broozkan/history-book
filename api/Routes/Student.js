@@ -6,7 +6,7 @@ const uploadDir = './public/images'
 const MultipartyMiddleware = multiparty({ keepExtensions: true, uploadDir: uploadDir })
 const fs = require('fs')
 const path = require('path');
-const deleteEmptyFilters = require('../Controllers/Controller')
+const Controller = require('../Controllers/Controller')
 
 // get students list
 router.get('/list/:page', async (req, res) => {
@@ -14,25 +14,31 @@ router.get('/list/:page', async (req, res) => {
     
 
     if(req.query){   
-        req.query = deleteEmptyFilters(req.query)
+        req.query = Controller.deleteEmptyFilters(req.query)
         
         if(req.query.student_name){
             req.query.student_name = { $regex : new RegExp(req.query.student_name, "i") }
         }
+
+        if(req.query.student_father_name){
+            req.query.student_father_name = { $regex : new RegExp(req.query.student_father_name, "i") }
+        }
     }
 
 
-    const aggregate =Student.aggregate([{
+    const aggregate =Student.studentModel.aggregate([{
         $match : req.query
     }])
     
 
     const options = { 
         page: req.params.page, 
-        limit: 25
+        limit: 100
     }
+
+    console.log(aggregate);
     
-    Student.aggregatePaginate(aggregate, options, (err, result) => {
+    Student.studentModel.aggregatePaginate(aggregate, options, (err, result) => {
         res.send(result)
     })
 })
@@ -40,7 +46,7 @@ router.get('/list/:page', async (req, res) => {
 // get specific student
 router.get('/get/:studentId', async (req, res) => {
     
-    Student.findById(req.params.studentId, (err, result) => {
+    Student.studentModel.findById(req.params.studentId, (err, result) => {
         res.send(result)
     })
 })
@@ -135,7 +141,7 @@ router.put('/update/:studentId', MultipartyMiddleware, async (req, res) => {
     console.log(req.body);
 
    // update operation
-   await Student.findByIdAndUpdate(
+   await Student.studentModel.findByIdAndUpdate(
     { _id: req.params.studentId },
     {
         student_name: req.body.student_name,
@@ -172,7 +178,7 @@ router.put('/update/:studentId', MultipartyMiddleware, async (req, res) => {
 
 router.get('/delete-all-students', async (req, res) => {
  
-    await Student.deleteMany({}, (err) => {
+    await Student.studentModel.deleteMany({}, (err) => {
         if (err) {
             res.send({
                 response: false,
@@ -190,7 +196,7 @@ router.get('/delete-all-students', async (req, res) => {
 
 router.delete('/delete/:studentId', async (req, res) => {
     
-    await Student.deleteOne({ _id: req.params.studentId }, (err) => {
+    await Student.studentModel.deleteOne({ _id: req.params.studentId }, (err) => {
         if (err) {
             res.send({
                 response: false,

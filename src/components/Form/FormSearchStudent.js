@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ArchiveContextWrapper, ArchiveContext } from '../../contexts/ArchiveContext'
-import studentCardPhoto from '../../images/student_card.jpg'
-import BookLoader from '../Loader/ZoomLoader'
+import studentCardPhoto from '../../images/student_card.png'
+import api from '../../services/api'
+import BookLoader from '../Loader/BookLoader'
+import { useHistory } from "react-router-dom"
+import FormSaveCard from '../../components/Form/FormSaveCard'
+import TableStockSearchs from '../Table/TableStockSearchs'
+import TabsSearchCards from '../Tabs/TabsSearchCards'
 
 const FormSearchStudent = () => {
 
@@ -11,20 +16,22 @@ const FormSearchStudent = () => {
         student_name: '',
         student_surname: '',
         student_father_name: '',
-        student_gender: 'male',
+        student_gender: '',
         student_birthday: '',
         student_nationality: '',
         student_school_number: '',
-        student_middle_school_graduation_beginning_date: '',
-        student_middle_school_graduation_ending_date: '',
-        student_high_school_graduation_beginning_date: '',
-        student_high_school_graduation_ending_date: ''
+        student_education_beginning_year: '',
+        student_education_ending_year: '',
+        student_middle_school_graduation_result: ''
     })
 
-    
-    const archiveContext = useContext(ArchiveContext)
-    console.log(archiveContext);
 
+    const archiveContext = useContext(ArchiveContext)
+    let history = useHistory();
+
+    useEffect(() => {
+        archiveContext.updateState('object', 'student', () => { })
+    }, [])
 
     const handleOnChange = (e) => {
         setState({
@@ -49,7 +56,23 @@ const FormSearchStudent = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSwapStockSearchClick = (data) => {
+        setState({
+            ...state,
+            student_name: data.stock_search_student_name,
+            student_surname: data.stock_search_student_surname,
+            student_father_name: data.stock_search_student_father_name,
+            student_gender: data.stock_search_student_gender,
+            student_birthday: data.stock_search_student_birthday,
+            student_nationality: data.stock_search_student_nationality,
+            student_school_number: data.stock_search_student_school_number,
+            student_education_beginning_year: data.stock_search_student_education_beginning_year,
+            student_education_ending_year: data.stock_search_student_education_ending_year,
+            is_search_detailed: true
+        })
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         setState({
@@ -58,8 +81,48 @@ const FormSearchStudent = () => {
         })
 
 
-        
+        const filters = {
+            student_name: state.student_name,
+            student_surname: state.student_surname,
+            student_father_name: state.student_father_name,
+            student_gender: state.student_gender,
+            student_birthday: state.student_birthday,
+            student_nationality: state.student_nationality,
+            student_school_number: state.student_school_number,
+            student_education_beginning_year: state.student_education_beginning_year,
+            student_education_ending_year: state.student_education_ending_year,
+            student_middle_school_graduation_result: state.student_middle_school_graduation_result
+        }
 
+        const students = await api.get('/student/list/1', { params: filters, headers: {'site-token': localStorage.getItem('site-token')} })
+
+
+
+        await archiveContext.updateState("search_results", students.data.docs, (res) => {
+            setTimeout(function () {
+                setState({
+                    ...state,
+                    is_loading: false
+                })
+                history.push('/arsiv/arama-sonuclari')
+            }, 3000)
+
+        })
+
+
+        // setTimeout(function () {
+        //     console.log(archiveContext.state)
+        //     if (archiveContext.state.is_commenting) {
+
+        //     }else{
+        //         setState({
+        //             ...state,
+        //             is_loading: false
+        //         })
+        //     }
+
+
+        // }, 3000)
 
     }
 
@@ -79,13 +142,12 @@ const FormSearchStudent = () => {
     // render loader
     let loaderHtml = ''
     if (state.is_loading) {
-        loaderHtml = <BookLoader state="opened" handleCancelClick={cancelSearch}/>
+        loaderHtml = <BookLoader state="opened" handleCancelClick={cancelSearch} />
     } else {
-        loaderHtml = <BookLoader state="closed"/>
+        loaderHtml = <BookLoader state="closed" />
 
     }
 
-    
 
 
 
@@ -93,7 +155,7 @@ const FormSearchStudent = () => {
         <>
             {loaderHtml}
             <div className="row">
-                <div className="col-lg-8">
+                <div className="col-lg-7">
                     <form className="form-search-student" onSubmit={handleSubmit}>
                         <div className="form-row">
                             <div className="form-group col-md-6 pl-0">
@@ -107,7 +169,7 @@ const FormSearchStudent = () => {
                         <div className={"row search-detail-container " + detailSearchVisibilityClass}>
                             <div className="col-md-6">
                                 <h4>
-                                    Kişisel Bilgiler {archiveContext.state.student_form_params}
+                                    Kişisel Bilgiler
                                     <h6 class="card-subtitle text-muted">üzerinden detaylandıralım veya</h6>
                                 </h4>
 
@@ -119,26 +181,31 @@ const FormSearchStudent = () => {
                                 <div className="form-row">
                                     <div className="form-group d-inline-flex">
                                         <label class="custom-control custom-radio">
-                                            <input name="student_gender" value="male" checked={state.student_gender === "male"} type="radio" onChange={handleOnChange} class="custom-control-input" />
+                                            <input name="student_gender" value="" checked={state.student_gender === ""} type="radio" onChange={handleOnChange} class="custom-control-input" />
+                                            <span class="custom-control-label">Farketmez</span>
+                                        </label>
+                                        <label class="custom-control custom-radio ml-2">
+                                            <input name="student_gender" value="E" checked={state.student_gender === "E"} type="radio" onChange={handleOnChange} class="custom-control-input" />
                                             <span class="custom-control-label">Erkek</span>
                                         </label>
                                         <label class="custom-control custom-radio ml-2">
-                                            <input name="student_gender" value="female" checked={state.student_gender === "female"} type="radio" onChange={handleOnChange} class="custom-control-input" />
+                                            <input name="student_gender" value="K" checked={state.student_gender === "K"} type="radio" onChange={handleOnChange} class="custom-control-input" />
                                             <span class="custom-control-label">Kadın</span>
                                         </label>
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-8 pl-0">
-                                        <input className="form-control" type="text" name="student_birthday" onChange={handleOnChange} value={state.student_birthday} id="student_birthday" placeholder="Doğum tarihi giriniz" />
+                                        <input className="form-control" type="number" name="student_birthday" onChange={handleOnChange} value={state.student_birthday} id="student_birthday" placeholder="Doğum yılı giriniz" />
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-8 pl-0">
                                         <select className="form-control" name="student_nationality" value={state.student_nationality} onChange={handleOnChange}>
                                             <option value="" disabled selected>Uyruk Seçiniz</option>
-                                            <option value="turkish">Türk</option>
-                                            <option value="armenia">Ermeni</option>
+                                            <option value="TÜRK">Türk</option>
+                                            <option value="RUM">Rum</option>
+                                            <option value="ERMENİ">Ermeni</option>
                                         </select>
                                     </div>
                                 </div>
@@ -159,21 +226,12 @@ const FormSearchStudent = () => {
 
 
                                 <div className="form-row">
-                                    <label>Ortaokul Mezuniyet Tarih Aralığı</label>
-                                    <div className="form-group col-md-6 pl-0">
-                                        <input className="form-control " name="student_middle_school_graduation_beginning_date" value={state.student_middle_school_graduation_beginning_date} onChange={handleOnChange} id="student_middle_school_graduation_beginning_date" placeholder="Başlangıç tarihi giriniz" />
-                                    </div>
-                                    <div className="form-group col-md-6 pl-0">
-                                        <input className="form-control " name="student_middle_school_graduation_ending_date" value={state.student_middle_school_graduation_ending_date} onChange={handleOnChange} id="student_middle_school_graduation_ending_date" placeholder="Bitiş tarihi giriniz" />
-                                    </div>
-                                </div>
-                                <div className="form-row">
                                     <label>Lise Mezuniyet Tarih Aralığı</label>
                                     <div className="form-group col-md-6 pl-0">
-                                        <input className="form-control " name="student_high_school_graduation_beginning_date" value={state.student_high_school_graduation_beginning_date} onChange={handleOnChange} id="student_high_school_graduation_beginning_date" placeholder="Başlangıç tarihi giriniz" />
+                                        <input className="form-control " type="number" name="student_education_beginning_year" value={state.student_education_beginning_year} onChange={handleOnChange} id="student_education_beginning_year" placeholder="Başlangıç yılı giriniz" />
                                     </div>
                                     <div className="form-group col-md-6 pl-0">
-                                        <input className="form-control " name="student_high_school_graduation_ending_date" value={state.student_high_school_graduation_ending_date} onChange={handleOnChange} id="student_high_school_graduation_ending_date" placeholder="Bitiş tarihi giriniz" />
+                                        <input className="form-control " type="number" name="student_education_ending_year" value={state.student_education_ending_year} onChange={handleOnChange} id="student_education_ending_year" placeholder="Bitiş yılı giriniz" />
                                     </div>
                                 </div>
                             </div>
@@ -186,24 +244,33 @@ const FormSearchStudent = () => {
                         </div>
                     </form>
                 </div>
-                <div className="col-lg-4">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <img src={studentCardPhoto} className="img-fluid position-relative rounded" />
-                            <p className="card-clone" id="student-school-name-card-clone">SİVAS LİSESİ</p>
-                            <p className="card-clone" id="student-name-card-clone">{state.student_name}</p>
-                            <p className="card-clone" id="student-surname-card-clone">{state.student_surname}</p>
-                            <p className="card-clone" id="student-father-name-card-clone">{state.student_father_name}</p>
-                            <p className="card-clone" id="student-nationality-card-clone">{state.student_nationality}</p>
-                            <p className="card-clone" id="student-birthday-card-clone">{state.student_birthday}</p>
-                            <p className="card-clone" id="student-school-number-card-clone">{state.student_school_number}</p>
+                <div className="col-lg-5">
+                    <div class="tabs">
+                        <TabsSearchCards />
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <img src={studentCardPhoto} className="img-fluid position-relative rounded" />
+                                        <p className="card-clone" id="student-school-name-card-clone">SİVAS LİSESİ</p>
+                                        <p className="card-clone" id="student-name-card-clone">{state.student_name}</p>
+                                        <p className="card-clone" id="student-surname-card-clone">{state.student_surname}</p>
+                                        <p className="card-clone" id="student-father-name-card-clone">{state.student_father_name}</p>
+                                        <p className="card-clone" id="student-nationality-card-clone">{state.student_nationality}</p>
+                                        <p className="card-clone" id="student-birthday-card-clone">{state.student_birthday}</p>
+                                        <p className="card-clone" id="student-school-number-card-clone">{state.student_school_number}</p>
+                                    </div>
+                                </div>
+                                <FormSaveCard state={state} />
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <TableStockSearchs setStockSearchState={handleSwapStockSearchClick} />
+                            </div>
+
                         </div>
                     </div>
-                    <div className="row mt-3">
-                        <div className="col-lg-12">
-                            <button className="btn btn-sm btn-outline w-100"><span className="fa fa-save"></span> Kartı Kaydet</button>
-                        </div>
-                    </div>
+
+
                 </div>
             </div>
         </>

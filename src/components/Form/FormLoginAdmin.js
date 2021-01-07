@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import api from '../../services/api'
 import CardLoader from '../Loader/CardLoader'
 
-const FormLogin = () => {
+const FormLoginAdmin = () => {
 
     const [state, setState] = useState({
         user_username: '',
@@ -11,6 +13,7 @@ const FormLogin = () => {
         is_form_submitting: false
     })
 
+    const history = useHistory()
 
     const handleChange = (e) => {
 
@@ -36,9 +39,23 @@ const FormLogin = () => {
         })
         console.log(state);
 
-        const response = await api.get('/user/login', state)
 
+        const loginResponse = await api.post('/user/login/', {}, {auth:{ username: state.user_username,password: state.user_password }})
 
+        console.log(loginResponse);
+        if (loginResponse.data.response) {
+            localStorage.setItem('admin-user', JSON.stringify(loginResponse.data.responseData[0]))
+            localStorage.setItem('admin-token', JSON.stringify(loginResponse.data.token))
+            
+            history.push('/admin/')
+            
+        }else{
+            Swal.fire({
+                title: 'Hata!',
+                text: loginResponse.data.responseData,
+                icon: 'error'
+            })
+        }
 
         setState({
             ...state,
@@ -92,4 +109,4 @@ const FormLogin = () => {
     )
 }
 
-export default FormLogin
+export default FormLoginAdmin

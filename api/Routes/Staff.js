@@ -6,7 +6,7 @@ const uploadDir = './public/images'
 const MultipartyMiddleware = multiparty({ keepExtensions: true, uploadDir: uploadDir })
 const fs = require('fs')
 const path = require('path');
-const deleteEmptyFilters = require('../Controllers/Controller')
+const Controller = require('../Controllers/Controller')
 
 // get staffs list
 router.get('/list/:page', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/list/:page', async (req, res) => {
     
 
     if(req.query){   
-        req.query = deleteEmptyFilters(req.query)
+        req.query = Controller.deleteEmptyFilters(req.query)
         
         if(req.query.staff_name){
             req.query.staff_name = { $regex : new RegExp(req.query.staff_name, "i") }
@@ -29,7 +29,7 @@ router.get('/list/:page', async (req, res) => {
 
     const options = { 
         page: req.params.page, 
-        limit: 25
+        limit: 100
     }
     
     Staff.aggregatePaginate(aggregate, options, (err, result) => {
@@ -216,6 +216,7 @@ const newStaff = async (data, callBack) => {
         staff_birthday: data.staff_birthday,
         staff_nationality: data.staff_nationality,
         staff_country: data.staff_country,
+        staff_father_name: data.staff_father_name,
         staff_gender: data.staff_gender,
         staff_duty: data.staff_duty,
         staff_branch: data.staff_branch,

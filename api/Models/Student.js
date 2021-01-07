@@ -59,4 +59,5 @@ const studentSchema = mongoose.Schema({
 studentSchema.plugin(aggregatePaginate);
 
 
-module.exports = mongoose.model('Student', studentSchema)
+module.exports.studentSchema = studentSchema
+module.exports.studentModel = mongoose.model('Student', studentSchema)

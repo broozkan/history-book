@@ -18,9 +18,12 @@ const SearchView = (props) => {
 
     // render form 
     let searchFormHtml = ''
+    let pageTitle = ''
     if(props.match.params.type == "ogrenci"){
         searchFormHtml = <FormSearchStudent />
+        pageTitle = "ÖĞRENCİ ARA"
     }else{
+        pageTitle = "PERSONEL ARA"
         searchFormHtml = <FormSearchStaff />
     }
 
@@ -28,7 +31,7 @@ const SearchView = (props) => {
 
     return (
         <>
-            <SectionPageTitle />
+            <SectionPageTitle page_title={pageTitle} />
             <section id="page-content">
                 <div className="container">
 
@@ -39,10 +42,9 @@ const SearchView = (props) => {
                             <div class="tabs">
 
                                 <TabsSearchTypes type={props.match.params.type} />
-                                <ArchiveContextWrapper>
-                                    {searchFormHtml}
+                                  {searchFormHtml}
 
-                                </ArchiveContextWrapper>
+                                
                             </div>
 
 

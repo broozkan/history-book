@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { ArchiveContext } from '../../contexts/ArchiveContext'
 import SpinLoader from '../Loader/SpinLoader'
 
 
 
 const FormFeedback = () => {
+
+    const archiveContext = useContext(ArchiveContext)
+
 
 
     const [state, setState] = useState({
@@ -21,9 +25,22 @@ const FormFeedback = () => {
 
 
     const handleOnChange = (e) => {
+
         setState({
-            [e.target.name] : e.target.value
+            ...state,
+            [e.target.name]: e.target.value
         })
+
+
+
+        if (state.feedback === "") {
+            archiveContext.updateState('is_commenting', false, ()=>{})
+        }else{
+            console.log("sasfsa");
+            archiveContext.updateState('is_commenting', true, ()=>{})
+        }
+
+
 
     }
 

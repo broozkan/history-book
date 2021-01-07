@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import FormLogin from '../../../components/Form/FormLogin'
+import FormLoginAdmin from '../../../components/Form/FormLoginAdmin'
 
 const LoginView = () => {
 
@@ -8,7 +8,7 @@ const LoginView = () => {
     return (
         <div class="container">
             <div>
-                <FormLogin />
+                <FormLoginAdmin />
             </div>
         </div>
     )

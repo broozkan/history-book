@@ -3,9 +3,11 @@ import Footer from '../../components/Footer/Footer';
 import SectionPageTitle from '../../components/Section/SectionPageTitle';
 
 const ContactView = () => {
+
+    console.log("okasfkla");
     return (
         <>
-            <SectionPageTitle />
+            <SectionPageTitle page_title="İLETİŞİM" />
             <section>
                 <div className="container">
                     <div className="row">
@@ -33,10 +35,10 @@ const ContactView = () => {
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <h3 class="text-uppercase">İLETİŞİM BİLGİLERİMİZ</h3>
-                            <div class="row">
-                                <div class="col-lg-12">
+                        <div className="col-lg-6">sda
+                            <h3 className="text-uppercase">İLETİŞİM BİLGİLERİMİZ</h3>
+                            <div className="row">
+                                <div className="col-lg-12">
                                     <address>
                                         <strong><span className="fa fa-envelope"></span> Bize e-posta gönderebilirsiniz</strong>
                                         <br></br>
@@ -59,6 +61,7 @@ const ContactView = () => {
 
             <Footer />
         </>
+        
     )
 }
 

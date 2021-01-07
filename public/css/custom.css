@@ -93,46 +93,46 @@
 .card-clone{
     position: absolute;
     color: black;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: bold;
 }
 #student-school-name-card-clone{
-    top: 47px;
+    top: 75px;
     left: 264px;
 }
 #student-name-card-clone{
-    top: 88px;
+    top: 142px;
     left: 264px;
 }
 #student-surname-card-clone{
-    top: 103px;
+    top: 165px;
     left: 264px;
 }
 
 #student-father-name-card-clone{
-    top: 117px;
+    top: 188px;
     left: 264px;
 }
 
 #student-nationality-card-clone{
-    top: 131px;
+    top: 213px;
     left: 292px;
 }
 #student-birthday-card-clone{
-    top: 145px;
+    top: 237px;
     left: 292px;
 }
 #student-school-number-card-clone{
-    top: 75px;
+    top: 119px;
     left: 264px;
 }
 
 
 /* ZOOM LOADER */
-.zoom-loader-container.closed *{ 
+.book-loader-container.closed *{ 
     display: none;
 }
-.zoom-loader-container.closed{
+.book-loader-container.closed{
     display: flex;
     background-color: #ffffff;
     justify-content: center;
@@ -145,7 +145,7 @@
     bottom: 0;
     z-index: 1;
 }
-.zoom-loader-container.opened{
+.book-loader-container.opened{
     display: flex;
     background-color: #ffffff;
     justify-content: center;
@@ -165,12 +165,12 @@
     top: 5rem;
 }
 
-.zoom-loader-container img{
-    margin-top: 15%;
+.book-loader-container img{
+    margin-top: 35%;
     z-index: 2;
     height: 44px;
 }
-.zoom-loader-container h2{
+.book-loader-container h2{
     margin-top: 0;
     z-index: 2;
 }
@@ -195,5 +195,21 @@
 
 .student-profile .personal-informations li{
     padding-top: 1rem ;
+}
+
+
+/* STOCK SEARCHS */
+.section-stock-searchs-content.closed{
+    transition: height .3s ease;
+    height: 0px;
+}
+
+.section-stock-searchs-content.opened{
+    transition: height .3s ease;
+    height: 40px;
+}
+
+.tbl-stock-searchs td{
+    padding: 15px;
 }
 

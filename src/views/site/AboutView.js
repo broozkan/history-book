@@ -6,7 +6,7 @@ import SectionPageTitle from '../../components/Section/SectionPageTitle';
 const HomeView = () => {
     return(
         <>
-            <SectionPageTitle/>
+            <SectionPageTitle page_title="BİZ KİMİZ?"  />
             <SectionAboutUs />
             <Footer />
         </>

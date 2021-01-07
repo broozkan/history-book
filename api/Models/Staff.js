@@ -15,7 +15,7 @@ const staffSchema = mongoose.Schema({
         required: false
     },
     staff_birthday: {
-        type: Date,
+        type: String,
         required: false
     },
     staff_nationality: {
@@ -23,6 +23,10 @@ const staffSchema = mongoose.Schema({
         required: false
     },
     staff_country: {
+        type: String,
+        required: false
+    },
+    staff_father_name: {
         type: String,
         required: false
     },
@@ -39,11 +43,11 @@ const staffSchema = mongoose.Schema({
         required: false
     },
     staff_duty_beginning_date: {
-        type: Date,
+        type: String,
         required: false
     },
     staff_duty_ending_date: {
-        type: Date,
+        type: String,
         required: false
     }
 })
