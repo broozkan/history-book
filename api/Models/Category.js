@@ -5,6 +5,18 @@ const categorySchema = mongoose.Schema({
     category_name: {
         type: String,
         required: [true, "Kategori adı zorunludur"]
+    },
+    category_type: {
+        type: String,
+        required: [true, "Kategori tipi zorunludur"]
+    },
+    category_upper_category: {
+        type: Array,
+        required: false
+    },
+    is_category_main: {
+        type: Boolean,
+        required: true
     }
 })
 

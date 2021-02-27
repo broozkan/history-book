@@ -136,6 +136,7 @@ router.put('/update/:staffId', MultipartyMiddleware, async (req, res) => {
    await Staff.findByIdAndUpdate(
     { _id: req.params.staffId },
     {
+        staff_school: req.body.staff_school,
         staff_name: req.body.staff_name,
         staff_surname: req.body.staff_surname,
         staff_photo: req.body.staff_photo,
@@ -210,6 +211,7 @@ router.delete('/delete/:staffId', async (req, res) => {
 const newStaff = async (data, callBack) => {
 
     const staff = new Staff({
+        staff_school: data.staff_school,
         staff_name: data.staff_name,
         staff_surname: data.staff_surname,
         staff_photo: data.staff_photo,

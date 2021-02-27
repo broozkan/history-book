@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Category = require('./Category')
+const User = require('./User')
 var aggregatePaginate = require("mongoose-aggregate-paginate-v2")
 
 const postSchema = mongoose.Schema({
@@ -19,7 +20,8 @@ const postSchema = mongoose.Schema({
     post_content: {
         type: String,
         required: [true, "Yazı alanı boş bırakılamaz"]
-    }
+    },
+    post_user: [User.userSchema]
 })
 
 postSchema.plugin(aggregatePaginate);

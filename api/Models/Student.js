@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 var aggregatePaginate = require("mongoose-aggregate-paginate-v2")
+const School = require('./School')
 
 const studentSchema = mongoose.Schema({
+    student_school: [School.schoolSchema],
     student_name: {
         type: String,
         required: false

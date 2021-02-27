@@ -52,7 +52,6 @@ router.post('/new', async (req, res) => {
     const user = jwt.verify(token, process.env.TOKEN_SECRET)
 
     req.body.user = user.userData[0]
-    console.log(user);
 
     newStockSearch(req.body,(result)=>{
         if(result.status == false){

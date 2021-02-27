@@ -138,12 +138,13 @@ router.put('/update/:studentId', MultipartyMiddleware, async (req, res) => {
         req.body.student_photo = "profile.jpg"
     }
 
-    console.log(req.body);
+    
 
    // update operation
    await Student.studentModel.findByIdAndUpdate(
     { _id: req.params.studentId },
     {
+        student_school: req.body.student_school,
         student_name: req.body.student_name,
         student_surname: req.body.student_surname,
         student_father_name: req.body.student_father_name,
@@ -217,7 +218,8 @@ const newStudent = async (data, callBack) => {
 
   
 
-    const student = new Student({
+    const student = new Student.studentModel({
+        student_school: data.student_school,
         student_name: data.student_name,
         student_surname: data.student_surname,
         student_father_name: data.student_father_name,

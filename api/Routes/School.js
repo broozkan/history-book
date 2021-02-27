@@ -1,46 +1,46 @@
 const express = require('express')
 const router = express.Router()
-const Post = require('../Models/Post')
+const School = require('../Models/School')
+const Controller = require('../Controllers/Controller')
 const multiparty = require('connect-multiparty')
 const uploadDir = './public/images'
 const MultipartyMiddleware = multiparty({ keepExtensions: true, uploadDir: uploadDir })
 const fs = require('fs')
 const path = require('path');
-const Controller = require('../Controllers/Controller')
 
-// get posts list
+
+// get school list
 router.get('/list/:page', async (req, res) => {
 
-    
 
-    if(req.query){   
+
+    if (req.query) {
         req.query = Controller.deleteEmptyFilters(req.query)
-        
-        if(req.query.post_name){
-            req.query.post_name = { $regex : new RegExp(req.query.post_name, "i") }
+
+        if (req.query.school_name) {
+            req.query.school_name = { $regex: new RegExp(req.query.school_name, "i") }
         }
     }
 
-
-    const aggregate =Post.aggregate([{
-        $match : req.query
+    console.log(req.query);
+    const aggregate = School.schoolModel.aggregate([{
+        $match: req.query
     }])
-    
 
-    const options = { 
-        page: req.params.page, 
-        limit: 3
+    const options = {
+        page: req.params.page,
+        limit: 100
     }
-    
-    Post.aggregatePaginate(aggregate, options, (err, result) => {
+
+    School.schoolModel.aggregatePaginate(aggregate, options, (err, result) => {
         res.send(result)
     })
 })
 
-// get specific post
-router.get('/get/:postId', async (req, res) => {
-    
-    Post.findById(req.params.postId, (err, result) => {
+// get specific school
+router.get('/get/:schoolId', async (req, res) => {
+
+    School.schoolModel.findById(req.params.schoolId, (err, result) => {
         res.send(result)
     })
 })
@@ -51,12 +51,11 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
     req.body = JSON.parse(req.body.data)
 
 
-
-    if(req.files.file){
+    if (req.files.file) {
         const tmp_path = req.files.file.path
         const target_path = path.join(uploadDir, req.files.file.name)
-    
-    
+
+
         fs.rename(tmp_path, target_path, (err) => {
             if (err) {
                 res.send({
@@ -64,33 +63,31 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
                     responseData: "Dosya yüklenemedi"
                 })
                 res.end()
-    
+
                 return false
             } else {
                 fs.unlink(tmp_path, (err) => {
-                    
+
                 })
-    
+
             }
         })
-    
-        req.body.post_photo = req.files.file.name
-    }else{
-        req.body.post_photo = 'no-photo.jpg'
+
+        req.body.school_photo = req.files.file.name
+    } else {
+        req.body.school_photo = 'school-default.jpg'
     }
-  
-  
 
 
-    const post = new Post({
-        post_title: req.body.post_title,
-        post_alternative_title: req.body.post_alternative_title,
-        post_photo: req.body.post_photo,
-        post_category: req.body.post_category,
-        post_content: req.body.post_content
+    const school = new School.schoolModel({
+        school_name: req.body.school_name,
+        school_building_date: req.body.school_building_date,
+        school_description: req.body.school_description,
+        school_photo: req.body.school_photo
+
     })
 
-    const savedPost = post.save((err) => {
+    const savedSchool = school.save((err) => {
         if (err) {
             console.log(err);
             res.send({
@@ -100,7 +97,7 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
         } else {
             res.send({
                 response: true,
-                responseData: post
+                responseData: savedSchool
             })
 
         }
@@ -109,16 +106,17 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
 })
 
 
-router.put('/update/:postId', MultipartyMiddleware, async (req, res) => {
+router.put('/update/:schoolId', MultipartyMiddleware, async (req, res) => {
+
 
     req.body = JSON.parse(req.body.data)
 
 
-    if(req.files.file){
+    if (req.files.file) {
         const tmp_path = req.files.file.path
         const target_path = path.join(uploadDir, req.files.file.name)
-    
-    
+
+
         fs.rename(tmp_path, target_path, (err) => {
             if (err) {
                 res.send({
@@ -126,54 +124,53 @@ router.put('/update/:postId', MultipartyMiddleware, async (req, res) => {
                     responseData: "Dosya yüklenemedi"
                 })
                 res.end()
-    
+
                 return false
             } else {
                 fs.unlink(tmp_path, (err) => {
-                    
+
                 })
-    
+
             }
         })
-        
-        req.body.post_photo = req.files.file.name
-    }else{
-        req.body.post_photo = "profile.jpg"
-    }
 
-    console.log(req.body);
-
-   // update operation
-   await Post.findByIdAndUpdate(
-    { _id: req.params.postId },
-    {
-        post_title: req.body.post_title,
-        post_alternative_title: req.body.post_alternative_title,
-        post_photo: req.body.post_photo,
-        post_category: req.body.post_category,
-        post_content: req.body.post_content
-    }
-
-,(err, updatedPost) => {
-    if (err) {
-        res.send({
-            response: false,
-            responseData: err
-        })
+        req.body.school_photo = req.files.file.name
     } else {
-        res.send({
-            response: true,
-            responseData: updatedPost
-        })
+        req.body.school_photo = 'school-default.jpg'
     }
-})
 
-})
-
-
-router.delete('/delete/:postId', async (req, res) => {
     
-    await Post.deleteOne({ _id: req.params.postId }, (err) => {
+
+    // update operation
+    await School.schoolModel.findByIdAndUpdate(
+        { _id: req.params.schoolId },
+        {
+            school_name: req.body.school_name,
+            school_building_date: req.body.school_building_date,
+            school_description: req.body.school_description,
+            school_photo: req.body.school_photo
+        }
+
+        , (err, updatedSchool) => {
+            if (err) {
+                res.send({
+                    response: false,
+                    responseData: err
+                })
+            } else {
+                res.send({
+                    response: true,
+                    responseData: updatedSchool
+                })
+            }
+        })
+
+})
+
+
+router.delete('/delete/:schoolId', async (req, res) => {
+
+    await School.deleteOne({ _id: req.params.schoolId }, (err) => {
         if (err) {
             res.send({
                 response: false,
