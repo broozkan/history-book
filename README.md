@@ -5,5 +5,7 @@
 
 
 ### Installation
--Just clone project and run 
+
+-Configure MongoDB configuration in your .env file
+-Clone project and run
 `$ npm start`
