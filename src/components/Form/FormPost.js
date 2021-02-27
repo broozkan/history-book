@@ -5,24 +5,39 @@ import Swal from 'sweetalert2'
 import ModalCategory from '../Modal/ModalNewCategory'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Component } from 'react'
 
 
-const FormPost = (props) => {
+class FormPost extends Component {
 
-    const [state, setState] = useState({
-        post_title: '',
-        post_alternative_title: '',
-        post_photo: '',
-        post_category: [],
-        post_content: '',
-        categories: [],
-        post_content: '',
-        is_categories_loaded: false,
-        is_post_open_open_for_comment: false
-    })
+    constructor() {
+        super()
 
-    const resetState = () => {
-        setState({
+        this.state = {
+            post_title: '',
+            post_alternative_title: '',
+            post_photo: '',
+            post_category: [],
+            post_content: '',
+            categories: [],
+            post_content: '',
+            is_categories_loaded: false,
+            is_form_submitting: false,
+            is_post_open_open_for_comment: false
+        }
+
+        this.handleChange = this.handleChange.bind(this)
+        this.resetState = this.resetState.bind(this)
+        this.handleCkEditorChange = this.handleCkEditorChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.getCategories = this.getCategories.bind(this)
+        this.getPost = this.getPost.bind(this)
+    }
+
+
+    resetState = () => {
+        this.setState({
             post_title: '',
             post_alternative_title: '',
             post_photo: '',
@@ -36,25 +51,19 @@ const FormPost = (props) => {
         })
     }
 
-    useEffect(() => {
-        if (props.post_id) {
-            getPost()
-            getCategories()
-
-        } else {
-            getCategories()
+    componentDidMount() {
+        if (this.props.post_id) {
+            this.getPost()
         }
+        this.getCategories()
 
-    }, [])
+    }
 
 
-    const getPost = async (callback) => {
-        setState({
-            ...state,
-            is_form_submitting: true
-        })
+    getPost = async (callback) => {
 
-        const post = await api.get('/post/get/' + props.post_id, {})
+
+        const post = await api.get('/post/get/' + this.props.post_id, {})
             .then(async (result) => {
 
                 return result.data
@@ -62,106 +71,97 @@ const FormPost = (props) => {
             })
 
 
-        setState(post)
+        this.setState(post)
 
 
 
     }
 
 
-    const getCategories = async () => {
+    getCategories = async () => {
 
-        console.log(state)
         const categories = await api.get('/category/list/1', {})
             .then((result) => {
 
-                setState({
-                    ...state,
+                this.setState({
                     categories: result.data.docs,
                     is_categories_loaded: true
                 })
             })
-        console.log(state)
+
 
     }
 
 
-    const handleChange = (e) => {
+    handleChange = (e) => {
 
         if (e.target.type === "file") {
 
-            setState({
-                ...state,
+            this.setState({
                 [e.target.name]: e.target.files[0]
 
             })
         } else if (e.target.type === "select-one") {
 
-            let post_category = []
+            let post_category = new Array()
 
-            state.categories.map((item) => {
+            this.state.categories.map((item) => {
                 if (item._id == e.target.value) {
                     post_category.push(item)
                 }
             })
 
-            setState({
-                ...state,
+            this.setState({
                 post_category: post_category
             })
         } else {
-            setState({
-                ...state,
+            this.setState({
                 [e.target.name]: e.target.value
             })
         }
     }
 
-    const handleCkEditorChange = (event, editor) => {
+    handleCkEditorChange = (event, editor) => {
 
         const data = editor.getData();
 
-        setState({
-            ...state,
+        this.setState({
             post_content: data
         })
 
     }
 
-    const handleNewCategoryClick = () => {
-        setState({
-            ...state,
+    handleNewCategoryClick = () => {
+        this.setState({
             category_modal_visibility: true
         })
     }
 
 
-    const handleSubmit = async (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault()
 
-        setState({
-            ...state,
+        this.setState({
             is_form_submitting: true
         })
 
         let formData = new FormData()
 
 
-        await formData.append('file', state.post_photo)
-        await formData.append('data', JSON.stringify(state.post))
+        await formData.append('file', this.state.post_photo)
+        await formData.append('data', JSON.stringify(this.state))
 
 
         let submitResponse
-        if (props.post_id) {
-            submitResponse = await api.put('/post/update/' + props.post_id, formData, { headers: { 'content-type': 'multipart/form-data' } })
+        if (this.props.post_id) {
+            submitResponse = await api.put('/post/update/' + this.props.post_id, formData, { headers: { 'content-type': 'multipart/form-data' } })
 
-            setState({
-                ...state,
+            this.setState({
                 is_form_submitting: false
             })
         } else {
             submitResponse = await api.post('/post/new', formData, { headers: { 'content-type': 'multipart/form-data' } })
-            resetState()
+
         }
 
         if (submitResponse.data.response) {
@@ -170,15 +170,14 @@ const FormPost = (props) => {
                 text: 'Yazı kaydedildi',
                 icon: 'success'
             })
-            resetState()
+            this.resetState()
         } else {
             Swal.fire({
                 title: 'Hata',
                 text: submitResponse.data.responseData,
                 icon: 'error'
             })
-            setState({
-                ...state,
+            this.setState({
                 is_form_submitting: false
             })
         }
@@ -190,117 +189,130 @@ const FormPost = (props) => {
 
     }
 
-    // render card loader
-    let cardLoaderHtml = ''
-    if (state.is_form_submitting) {
-        cardLoaderHtml = <CardLoader />
-    } else {
-        cardLoaderHtml = ''
-    }
+
+    render() {
+
+        console.log(this.state);
+
+        // render card loader
+        let cardLoaderHtml = ''
+        if (this.state.is_form_submitting) {
+            cardLoaderHtml = <CardLoader />
+        } else {
+            cardLoaderHtml = ''
+        }
 
 
 
-    // render profile photo
-    let postPhotoHtml = ''
-    if (state.post_photo) {
-        postPhotoHtml = <img className="img-thumbnail" src={process.env.REACT_APP_API_ENDPOINT + "/file/" + state.post_photo} />
-    }
+        // render profile photo
+        let postPhotoHtml = ''
+        if (this.state.post_photo) {
+            postPhotoHtml = <img className="img-thumbnail" src={process.env.REACT_APP_API_ENDPOINT + "/file/" + this.state.post_photo} />
+        }
 
-    // render category modal
-    let categoryModalHtml = ''
-    if (state.category_modal_visibility) {
-        categoryModalHtml = <ModalCategory />
-    }
+        // render category modal
+        let categoryModalHtml = ''
+        if (this.state.category_modal_visibility) {
+            categoryModalHtml = <ModalCategory />
+        }
 
 
-    // render categories
-    let categoriesHtml = ''
-    if (state.is_categories_loaded) {
-        categoriesHtml = state.categories.map((item) => {
-            return <option value={item._id}>{item.category_name}</option>
-        })
-    } else {
-        categoriesHtml = <option value="">Yükleniyor...</option>
-    }
+        // render categories
+        let categoriesHtml = ''
+        let categoryValue = ''
+        if (this.state.is_categories_loaded) {
+            categoriesHtml = this.state.categories.map((item) => {
+                return <option value={item._id}>{item.category_name}</option>
+            })
+            if (this.state.post_category.length > 0) {
+                categoryValue = this.state.post_category[0]._id
+            }
+        } else {
+            categoriesHtml = <option value="">Yükleniyor...</option>
+        }
 
-    // render category modal
-    let ckeditorHtml = ''
-    if (!state.is_form_submitting) {
-        ckeditorHtml = (
-            <CKEditor
-                editor={ClassicEditor}
-                data={state.post_content}
-                onReady={editor => {
+        // render category modal
+        let ckeditorHtml = ''
+        if (!this.state.is_form_submitting) {
+            ckeditorHtml = (
+                <CKEditor
+                    editor={ClassicEditor}
+                    data={this.state.post_content}
+                    onReady={editor => {
 
-                    console.log('Editor is ready to use!', editor);
-                }}
-                onChange={handleCkEditorChange}
-                config={{
-                    ckfinder: { uploadUrl: process.env.REACT_APP_API_ENDPOINT + "/file/upload" }
-                }}
-            />
+                        console.log('Editor is ready to use!', editor);
+                    }}
+                    onChange={this.handleCkEditorChange}
+                    config={{
+                        ckfinder: { uploadUrl: process.env.REACT_APP_API_ENDPOINT + "/file/upload" }
+                    }}
+                />
+            )
+        }
+
+
+
+
+        return (
+            <div class="card">
+                {categoryModalHtml}
+                {cardLoaderHtml}
+                <div class="card-header">
+                    <span class="h4">Yazı Formu</span>
+                    <p class="text-muted">Bir blog yazısı paylaşın</p>
+                </div>
+                <div class="card-body">
+                    <form id="form1" class="form-validate" novalidate="novalidate" onSubmit={this.handleSubmit}>
+                        <div class="h5 mb-4">Yazı Bilgileri</div>
+                        <div className="form-row">
+                            <div className="form-group col-md-3">
+                                {postPhotoHtml}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="post_title">Başlığı (*)</label>
+                                <input type="text" class="form-control" value={this.state.post_title} onChange={this.handleChange} name="post_title" id="post_title" placeholder="Yazı başlığını giriniz" required="" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="post_alternative_title">Alt Başlığı (*)</label>
+                                <input type="text" class="form-control" value={this.state.post_alternative_title} onChange={this.handleChange} name="post_alternative_title" id="post_alternative_title" placeholder="Yazı alt başlığını giriniz" required="" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="post_photo">Kapak Fotoğrafı (*)</label>
+                                <input type="file" class="form-control" onChange={this.handleChange} name="post_photo" id="post_photo" placeholder="Yazı fotoğrafı giriniz" required="" />
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="post_category">Kategorisi (*)
+                                    <button className="btn btn-primary btn-sm float-right" type="button" onClick={this.handleNewCategoryClick}>Yeni Kategori Ekle</button>
+                                </label>
+                                <select name="post_category" className="form-control" value={categoryValue} onChange={this.handleChange}>
+                                    <option selected disabled value="">Kategori Seçiniz</option>
+                                    {categoriesHtml}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                <label for="post_content">Yazı (*)</label>
+                                {ckeditorHtml}
+                            </div>
+
+                        </div>
+                        <button type="submit" class="btn m-t-30 mt-3">Kaydet</button>
+                        <a href="/admin/post/list" className="btn btn-secondary m-t-30 mt-3">Geri</a>
+                    </form>
+                </div>
+            </div>
         )
     }
 
 
-
-    console.log(state);
-    return (
-        <div class="card">
-            {categoryModalHtml}
-            {cardLoaderHtml}
-            <div class="card-header">
-                <span class="h4">Yazı Formu</span>
-                <p class="text-muted">Bir blog yazısı paylaşın</p>
-            </div>
-            <div class="card-body">
-                <form id="form1" class="form-validate" novalidate="novalidate" onSubmit={handleSubmit}>
-                    <div class="h5 mb-4">Yazı Bilgileri</div>
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
-                            {postPhotoHtml}
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="post_title">Başlığı (*)</label>
-                            <input type="text" class="form-control" value={state.post_title} onChange={handleChange} name="post_title" id="post_title" placeholder="Yazı başlığını giriniz" required="" />
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="post_alternative_title">Alt Başlığı (*)</label>
-                            <input type="text" class="form-control" value={state.post_alternative_title} onChange={handleChange} name="post_alternative_title" id="post_alternative_title" placeholder="Yazı alt başlığını giriniz" required="" />
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="post_photo">Kapak Fotoğrafı (*)</label>
-                            <input type="file" class="form-control" onChange={handleChange} name="post_photo" id="post_photo" placeholder="Yazı fotoğrafı giriniz" required="" />
-
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="post_category">Kategorisi (*)
-                                <button className="btn btn-primary btn-sm float-right" type="button" onClick={handleNewCategoryClick}>Yeni Kategori Ekle</button>
-                            </label>
-                            <select name="post_category" className="form-control" onChange={handleChange}>
-                                {categoriesHtml}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-12">
-                            <label for="post_content">Yazı (*)</label>
-                            {ckeditorHtml}
-                        </div>
-
-                    </div>
-                    <button type="submit" class="btn m-t-30 mt-3">Kaydet</button>
-                    <a href="/admin/post/list" className="btn btn-secondary m-t-30 mt-3">Geri</a>
-                </form>
-            </div>
-        </div>
-    )
 }
 
 export default FormPost

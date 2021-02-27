@@ -22,6 +22,7 @@ import StaffProfileView from '../views/site/StaffProfileView'
 import { ArchiveContextWrapper } from '../contexts/ArchiveContext'
 import { SiteUserContextWrapper } from '../contexts/SiteUserContext'
 import LogoutView from '../views/site/LogoutView'
+import GalleryDetailView from '../views/site/GalleryDetailView'
 
 const RouterSite = (props) => {
 
@@ -38,7 +39,8 @@ const RouterSite = (props) => {
                     <Route path="/login" exact component={LoginView}></Route>
                     <Route path="/logout" exact component={LogoutView}></Route>
                     <Route path="/blog/detay/:postId" exact component={BlogDetailView}></Route>
-                    <Route path="/fotograf-galerisi" exact component={GalleryView}></Route>
+                    <Route path="/fotograf-galerisi/:photoGalleryCategoryId?" component={GalleryView}></Route>
+                    <Route path="/fotograf-galerisi-detay/:photoGalleryCategoryId" component={GalleryDetailView}></Route>
                     <Route path="/bize-ulasin" exact component={ContactView}></Route>
                     <ArchiveContextWrapper>
                         <Route path="/arsiv" exact component={ArchiveView}></Route>

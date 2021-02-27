@@ -16,6 +16,9 @@ const Sidebar = () => {
                         <nav>
                             <ul>
                                 <li><a href="index.html"><span className="fa fa-home"></span> YÖNETİM <span className="fa fa-chevron-right float-right mt-1"></span></a> </li>
+                                <li><a href="/admin/school/list"><span className="fa fa-school"></span> OKULLAR <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
+                                <li><a href="/admin/category/list"><span className="fa fa-list"></span> KATEGORİLER <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
+                                <li><a href="/admin/photo-gallery/list"><span className="fa fa-images"></span> FOTOĞRAF GALERİLERİ <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <li><a href="/admin/student/list"><span className="fa fa-user-friends"></span> ÖĞRENCİLER <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <li><a href="/admin/staff/list"><span className="fa fa-user-friends"></span> PERSONELLER <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <li><a href="/admin/student-comment/list"><span className="fa fa-comments"></span> YORUMLAR <span className="fa fa-chevron-right float-right mt-1"></span></a></li>

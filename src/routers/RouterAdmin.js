@@ -8,6 +8,10 @@ import {
 } from 'react-router-dom'
 import DashboardView from '../views/admin/Dashboard/DashboardView'
 
+import NewSchoolView from '../views/admin/School/NewSchoolView'
+import SchoolListView from '../views/admin/School/SchoolListView'
+import UpdateSchoolView from '../views/admin/School/UpdateSchoolView'
+
 import NewStudentView from '../views/admin/Student/NewStudentView'
 import StudentListView from '../views/admin/Student/StudentListView'
 import UpdateStudentView from '../views/admin/Student/UpdateStudentView'
@@ -26,9 +30,15 @@ import { AdminUserContext, AdminUserContextWrapper } from '../contexts/AdminUser
 import LogoutView from '../views/admin/User/LogoutView'
 import StudentCommentListView from '../views/admin/StudentComment/StudentCommentListView'
 import UpdateStudentCommentView from '../views/admin/StudentComment/UpdateStudentCommentView'
+import NewCategoryView from '../views/admin/Category/NewCategoryView'
+import CategoryListView from '../views/admin/Category/CategoryListView'
+import UpdateCategoryView from '../views/admin/Category/UpdateCategoryView'
+import NewPhotoGalleryView from '../views/admin/PhotoGallery/NewPhotoGalleryView'
+import PhotoGalleryListView from '../views/admin/PhotoGallery/PhotoGalleryListView'
+import UpdatePhotoGalleryView from '../views/admin/PhotoGallery/UpdatePhotoGalleryView'
 
 const RouterAdmin = () => {
-    
+
     const location = useLocation()
 
     return (
@@ -40,6 +50,19 @@ const RouterAdmin = () => {
                     <Route path="/admin/user/logout" exact component={LogoutView}></Route>
                     <AdminUserContextWrapper>
                         <Route path="/admin" exact component={DashboardView}></Route>
+
+                        <Route path="/admin/photo-gallery/new" exact component={NewPhotoGalleryView}></Route>
+                        <Route path="/admin/photo-gallery/list" exact component={PhotoGalleryListView}></Route>
+                        <Route path="/admin/photo-gallery/update/:photoGalleryId" exact component={UpdatePhotoGalleryView}></Route>
+
+                        <Route path="/admin/school/new" exact component={NewSchoolView}></Route>
+                        <Route path="/admin/school/list" exact component={SchoolListView}></Route>
+                        <Route path="/admin/school/update/:schoolId" exact component={UpdateSchoolView}></Route>
+
+                        <Route path="/admin/category/new" exact component={NewCategoryView}></Route>
+                        <Route path="/admin/category/list" exact component={CategoryListView}></Route>
+                        <Route path="/admin/category/update/:categoryId" exact component={UpdateCategoryView}></Route>
+
 
                         <Route path="/admin/student/new" exact component={NewStudentView}></Route>
                         <Route path="/admin/student/list" exact component={StudentListView}></Route>
