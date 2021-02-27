@@ -18,6 +18,18 @@
     padding: 10px;
     cursor: pointer;
 }
+.photo-gallery-breadcrumb{
+    font-size: 18px!important;
+}
+.breadcrumb-item.active{
+    color: #000000!important;
+}
+.card-photo-category .active{
+    background-color: blue;
+}
+.grid-item>img, .grid-item>a>img{
+    height: 200px;
+}
 
 
 /* SIDE PANEL */

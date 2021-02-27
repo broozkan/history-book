@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-./api/node_modules
+/api/node_modules
 
 
 # testing
@@ -27,5 +27,5 @@ yarn-debug.log*
 yarn-error.log*
 
 #images
-./api/public
+/api/public
 ./public
