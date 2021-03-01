@@ -12,8 +12,12 @@ export const SiteUserContextWrapper = (props) => {
 
 
     useEffect(()=>{
+        setUserCredentials()
+    },[])
+
+    
+    const setUserCredentials = () => {
         const user = JSON.parse(localStorage.getItem('site-user'))
-        console.log(user);
         if (user) {
             setState({
                 is_logged_in: true,
@@ -24,8 +28,7 @@ export const SiteUserContextWrapper = (props) => {
                 is_logged_in: false
             })
         }
-    },[])
-
+    }
 
     const updateState = (key, val, callBack) => {
         setState({
@@ -38,7 +41,7 @@ export const SiteUserContextWrapper = (props) => {
     console.log(state);
 
     return(
-        <SiteUserContext.Provider value={{state: state, updateState: updateState}}>
+        <SiteUserContext.Provider value={{state: state, updateState: updateState, setUserCredentials: setUserCredentials}}>
             {props.children}
         </SiteUserContext.Provider>
     )
