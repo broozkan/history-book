@@ -40,7 +40,9 @@ class GalleryDetailView extends Component {
 
         // render photos
         let photosHtml = ''
+        let photoGalleryName = ''
         if (this.state.is_photos_loaded) {
+            photoGalleryName = this.state.photos[0].photo_gallery_name
             photosHtml = this.state.photos[0].photo_gallery_photos.map((item) => {
                 return (
                     <CardPhoto photo={item} />
@@ -54,9 +56,8 @@ class GalleryDetailView extends Component {
                 <section id="page-content">
                     <div className="container">
                         <div className="heading-text heading-section text-center m-b-40">
-                            <h4 className="m-b-0">Fotoğraf Arşivimiz</h4>
-                            <span className="lead">Detaylandırılmış fotoğraf arşivimiz ile geçmişe yolculuk yapmaya ne dersiniz?</span>
-                        </div>
+                            <h4 className="m-b-0">{photoGalleryName}</h4>
+                       </div>
                         <div className="row">
 
                             <section id="page-content">

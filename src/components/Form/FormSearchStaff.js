@@ -111,10 +111,10 @@ const FormSearchStaff = () => {
     let detailSearchButtonHtml = '';
     let detailSearchVisibilityClass = 'closed';
     if (state.is_search_detailed) {
-        detailSearchButtonHtml = <a href="#" onClick={handleDetailSearchClick} className="mb-2">Dilerseniz aramanızı detaylandıralım <span className="fa fa-chevron-up"></span> </a>
+        detailSearchButtonHtml = <a href="#" onClick={handleDetailSearchClick} className="mb-2">Vazgeçtim, detay girmeyeceğim <span className="fa fa-chevron-up"></span> </a>
         detailSearchVisibilityClass = 'opened';
     } else {
-        detailSearchButtonHtml = <a href="#" onClick={handleDetailSearchClick} className="mb-2">Dilerseniz aramanızı detaylandıralım <span className="fa fa-chevron-down"></span> </a>
+        detailSearchButtonHtml = <a href="#" onClick={handleDetailSearchClick} className="mb-2">Daha fazla detay görmek istiyorum <span className="fa fa-chevron-down"></span> </a>
 
     }
 
@@ -149,11 +149,7 @@ const FormSearchStaff = () => {
                         </div>
                         <div className={"row search-detail-container " + detailSearchVisibilityClass}>
                             <div className="col-md-6">
-                                <h4>
-                                    Kişisel Bilgiler {archiveContext.state.staff_form_params}
-                                    <h6 class="card-subtitle text-muted">üzerinden detaylandıralım veya</h6>
-                                </h4>
-
+                            
                                 <div className="form-row">
                                     <div className="form-group col-md-8 pl-0">
                                         <input className="form-control " name="staff_father_name" onChange={handleOnChange} value={state.staff_father_name} id="staff_father_name" placeholder="Baba adı giriniz" />
@@ -196,11 +192,6 @@ const FormSearchStaff = () => {
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                <h4>
-                                    Okul Bilgilerini
-                        <h6 class="card-subtitle text-muted">hatırlamaya çalışalım</h6>
-
-                                </h4>
                                 <div className="form-row">
                                     <div className="form-group col-md-8 pl-0">
                                         <select className="form-control" name="staff_branch" value={state.staff_branch} onChange={handleOnChange}>

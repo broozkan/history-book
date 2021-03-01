@@ -20,7 +20,13 @@ router.get('/list/:page', async (req, res) => {
             req.query.is_category_main = (req.query.is_category_main == "true")
         }
 
+        if(req.query._id){
+            req.query._id = mongoose.Types.ObjectId(req.query._id)
+        }
+
     }
+
+    console.log(req.query);
 
     const aggregate = Category.categoryModel.aggregate([{
         $match: req.query

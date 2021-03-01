@@ -48,7 +48,7 @@ const FormLoginSite = (props) => {
         if (loginResponse.data.response) {
             localStorage.setItem('site-user', JSON.stringify(loginResponse.data.responseData[0]))
             localStorage.setItem('site-token', loginResponse.data.token)
-            siteUserContext.updateState('is_logged_in', true, () => {})
+            siteUserContext.setUserCredentials()
             if(props.closeModal){
                 props.closeModal()
             }

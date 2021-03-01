@@ -30,6 +30,12 @@
 .grid-item>img, .grid-item>a>img{
     height: 200px;
 }
+.portfolio-item .portfolio-image{
+    height: 20rem;
+}
+.portfolio-item .portfolio-image img, .portfolio-item .portfolio-video img, .portfolio-item .grid-image img, .portfolio-item .grid-video img, .portfolio-item .flickity-viewport img, .grid-item .portfolio-image img, .grid-item .portfolio-video img, .grid-item .grid-image img, .grid-item .grid-video img, .grid-item .flickity-viewport img{
+    height: 100%;
+}
 
 
 /* SIDE PANEL */
@@ -209,7 +215,10 @@
     padding-top: 1rem ;
 }
 
-
+/* SEARCH PAGE */
+.search-page p{
+    font-size: 1.2rem;
+}
 /* STOCK SEARCHS */
 .section-stock-searchs-content.closed{
     transition: height .3s ease;
@@ -225,3 +234,19 @@
     padding: 15px;
 }
 
+/* DONATE */
+.widget-donate{
+    position: fixed!important;
+    text-align: center;
+    left: 3rem;
+    bottom: 3rem;
+    z-index: 1;
+}
+.widget-donate .btn-donate{
+    border-radius: 50%!important;
+}
+
+.table-donates td{
+    font-size: 1.5rem!important;
+    padding: 1rem!important;
+}
