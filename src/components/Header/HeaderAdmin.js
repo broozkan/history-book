@@ -2,6 +2,7 @@ import React from 'react'
 
 
 const HeaderAdmin = () => {
+
     return (
         <header id="header" data-transparent="true" className={"submenu-light"}>
             <div className="header-inner">

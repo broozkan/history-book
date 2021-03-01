@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import studentsPhoto from '../../images/students.jpg'
-import teachersPhoto from '../../images/teachers.jpg'
 import PortfolioItem from '../Portfolio/PortfolioItem'
 import { SiteUserContext } from '../../contexts/SiteUserContext'
 
@@ -51,7 +49,7 @@ const Header = (props) => {
                 <a href="/login">
                     <button className="btn btn-light btn-outline">GİRİŞ YAP</button>
                 </a>
-             
+
             </>
         )
     }
@@ -89,48 +87,9 @@ const Header = (props) => {
                                     <li><a href="/">ANASAYFA</a></li>
                                     <li><a href="/nedir">NEDİR?</a></li>
                                     <li><a href="/blog">KÖŞE YAZILARI</a></li>
-                                    <li className="dropdown mega-menu-item">
-                                        <a href="/arsiv">ARŞİV</a>
-                                        <ul className="dropdown-menu">
-                                            <li className="mega-menu-content">
-                                                <div className="row">
-                                                    <div className="col-lg-12">
-                                                        <h3>Buradan başlayalım <small>nasıl aramak istersiniz?</small></h3>
-
-                                                        <div className="row filter-by">
-                                                            <div class="portfolio-2-columns">
-
-                                                                <PortfolioItem
-                                                                    photo={studentsPhoto}
-                                                                    title="ÖĞRENCİLERE GÖRE ARAMA YAP"
-                                                                    href="/arsiv/ara/ogrenci"
-
-                                                                />
-
-                                                                <PortfolioItem
-                                                                    photo={teachersPhoto}
-                                                                    title="PERSONELLERE GÖRE ARAMA YAP"
-                                                                    href="/arsiv/ara/personel"
-                                                                />
-
-
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                    <li><a href="/arsiv">ARŞİV</a></li>
                                     <li><a href="/fotograf-galerisi">FOTOĞRAF GALERİSİ</a></li>
                                     <li><a href="/bize-ulasin">İLETİŞİM</a></li>
-
-
-
-
-
-
                                 </ul>
                             </nav>
                         </div>
