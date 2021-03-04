@@ -8,11 +8,22 @@ import FormSaveCard from '../../components/Form/FormSaveCard'
 import TableStockSearchs from '../Table/TableStockSearchs'
 import TabsSearchCards from '../Tabs/TabsSearchCards'
 
+export const getResults = async (page = 1, params = JSON.parse(localStorage.getItem('search_filters'))) => {
+
+    const students = await api.get(`/student/list/${page}`, { params, headers: { 'site-token': localStorage.getItem('site-token') } })
+
+    localStorage.setItem('search_results', JSON.stringify(students.data.docs))
+    localStorage.setItem('search_results_pagination', JSON.stringify(students.data))
+
+
+}
+
 const FormSearchStudent = () => {
 
     const [state, setState] = useState({
         is_search_detailed: false,
         is_loading: false,
+        filters: {},
         student_name: '',
         student_surname: '',
         student_father_name: '',
@@ -93,38 +104,24 @@ const FormSearchStudent = () => {
             student_education_ending_year: state.student_education_ending_year,
             student_middle_school_graduation_result: state.student_middle_school_graduation_result
         }
+        localStorage.setItem('search_filters',JSON.stringify(filters))
 
-        const students = await api.get('/student/list/1', { params: filters, headers: {'site-token': localStorage.getItem('site-token')} })
+        getResults(1, filters)
 
+        setTimeout(function () {
 
+            setState({
+                ...state,
+                is_loading: false
+            })
+            history.push('/arsiv/arama-sonuclari/student')
+        }, 3000)
 
-        await archiveContext.updateState("search_results", students.data.docs, (res) => {
-            setTimeout(function () {
-                setState({
-                    ...state,
-                    is_loading: false
-                })
-                history.push('/arsiv/arama-sonuclari')
-            }, 3000)
-
-        })
-
-
-        // setTimeout(function () {
-        //     console.log(archiveContext.state)
-        //     if (archiveContext.state.is_commenting) {
-
-        //     }else{
-        //         setState({
-        //             ...state,
-        //             is_loading: false
-        //         })
-        //     }
-
-
-        // }, 3000)
 
     }
+
+
+
 
 
     // render detailed search

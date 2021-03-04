@@ -49,7 +49,7 @@ const RouterSite = (props) => {
                     <ArchiveContextWrapper>
                         <Route path="/arsiv" exact component={ArchiveView}></Route>
                         <Route path="/arsiv/ara/:type/:schoolName" exact component={SearchView}></Route>
-                        <Route path="/arsiv/arama-sonuclari" exact component={SearchResultView}></Route>
+                        <Route path="/arsiv/arama-sonuclari/:searchBy" exact component={SearchResultView}></Route>
                         <Route path="/arsiv/ogrenci/:studentId" exact component={StudentProfileView}></Route>
                         <Route path="/arsiv/personel/:staffId" exact component={StaffProfileView}></Route>
                     </ArchiveContextWrapper>

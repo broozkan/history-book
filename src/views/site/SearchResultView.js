@@ -1,44 +1,54 @@
-import React, {useContext} from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../components/Footer/Footer';
 import SectionPageTitle from '../../components/Section/SectionPageTitle';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route, Link
-
-} from 'react-router-dom'
+import { useRouteMatch } from 'react-router-dom'
 import CardStudentSearchResult from '../../components/Card/CardStudentSearchResult';
-import { ArchiveContextWrapper, ArchiveContext } from '../../contexts/ArchiveContext'
 import CardStaffSearchResult from '../../components/Card/CardStaffSearchResult';
+import Pagination from '../../components/Pagination/Pagination';
+import {getResults} from '../../components/Form/FormSearchStudent'
+import { logRoles } from '@testing-library/react';
 
 
 const SearchResultView = () => {
 
-    const archiveContext = useContext(ArchiveContext)
+    const match = useRouteMatch()
+    const [results, setResults] = useState([])
 
-    console.log(archiveContext);
+
+    useEffect(() => {
+        setResults(JSON.parse(localStorage.getItem('search_results')))
+    }, [])
+
+
+    const handleOnClick = async (clickedPageNumber) => {
+        await getResults(clickedPageNumber)
+
+        await setResults(JSON.parse(localStorage.getItem('search_results')))
+    }
+
+
     // render results
     let resultsHtml = ''
-    if (archiveContext.state.search_results.length > 0) {
-        resultsHtml = archiveContext.state.search_results.map((item) => {
-            
-            if (archiveContext.state.object === "student") {
-                return(
+    if (results.length > 0) {
+        resultsHtml = results.map((item) => {
+
+            if (match.params.searchBy === "student") {
+                return (
                     <CardStudentSearchResult object={item} />
-                )    
-            }else{
-                return(
+                )
+            } else {
+                return (
                     <CardStaffSearchResult object={item} />
                 )
             }
-            
-        })    
-    }else{
+
+        })
+    } else {
         resultsHtml = (
             <h4>Sonuç bulunamadı</h4>
         )
     }
-    
+
 
 
 
@@ -54,6 +64,11 @@ const SearchResultView = () => {
                             <div className="row team-members team-members-left team-members-shadow m-b-40">
                                 {resultsHtml}
 
+                            </div>
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <Pagination object={JSON.parse(localStorage.getItem('search_results_pagination'))}  onClick={handleOnClick}/>
+                                </div>
                             </div>
 
 
