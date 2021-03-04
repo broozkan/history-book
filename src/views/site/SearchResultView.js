@@ -5,7 +5,7 @@ import { useRouteMatch } from 'react-router-dom'
 import CardStudentSearchResult from '../../components/Card/CardStudentSearchResult';
 import CardStaffSearchResult from '../../components/Card/CardStaffSearchResult';
 import Pagination from '../../components/Pagination/Pagination';
-import {getResults} from '../../components/Form/FormSearchStudent'
+import { getResults } from '../../components/Form/FormSearchStudent'
 import { logRoles } from '@testing-library/react';
 
 
@@ -67,7 +67,7 @@ const SearchResultView = () => {
                             </div>
                             <div className="row">
                                 <div className="col-lg-12">
-                                    <Pagination object={JSON.parse(localStorage.getItem('search_results_pagination'))}  onClick={handleOnClick}/>
+                                    <Pagination object={JSON.parse(localStorage.getItem('search_results_pagination'))} onClick={handleOnClick} />
                                 </div>
                             </div>
 

@@ -4,6 +4,18 @@ import BookLoader from '../Loader/BookLoader'
 import api from '../../services/api'
 import { useHistory } from "react-router-dom"
 
+
+export const getResults = async (page = 1, params = JSON.parse(localStorage.getItem('search_filters'))) => {
+
+    const staffs = await api.get(`/staff/list/${page}`, { params, headers: { 'site-token': localStorage.getItem('site-token') } })
+
+    localStorage.setItem('search_results', JSON.stringify(staffs.data.docs))
+    localStorage.setItem('search_results_pagination', JSON.stringify(staffs.data))
+
+
+}
+
+
 const FormSearchStaff = () => {
 
     const [state, setState] = useState({
@@ -74,20 +86,19 @@ const FormSearchStaff = () => {
             staff_duty_ending_date: state.staff_duty_ending_date
         }
 
-        const staffs = await  api.get('/staff/list/1', { params: filters, headers: {'site-token': localStorage.getItem('site-token')} })
 
+        localStorage.setItem('search_filters',JSON.stringify(filters))
 
-        console.log(staffs);
-        await archiveContext.updateState("search_results", staffs.data.docs, (res) => {
-            setTimeout(function () {
-                setState({
-                    ...state,
-                    is_loading: false
-                })
-                history.push('/arsiv/arama-sonuclari')
-            }, 3000)
+        getResults(1, filters)
 
-        })
+        setTimeout(function () {
+
+            setState({
+                ...state,
+                is_loading: false
+            })
+            history.push('/arsiv/arama-sonuclari/staff')
+        }, 3000)
 
 
         // setTimeout(function () {
