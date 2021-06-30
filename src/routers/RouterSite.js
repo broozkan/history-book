@@ -25,6 +25,9 @@ import LogoutView from '../views/site/LogoutView'
 import GalleryDetailView from '../views/site/GalleryDetailView'
 import DonateView from '../views/site/DonateView'
 import DonateInstituesView from '../views/site/DonateInstituesView'
+import PaymentView from '../views/site/PaymentView'
+import PaymentSuccessView from '../views/site/PaymentSuccessView'
+import PaymentErrorView from '../views/site/PaymentErrorView'
 
 const RouterSite = (props) => {
 
@@ -45,6 +48,9 @@ const RouterSite = (props) => {
                     <Route path="/fotograf-galerisi/detay/:photoGalleryCategoryId" component={GalleryDetailView}></Route>
                     <Route path="/bagis" exact component={DonateView}></Route>
                     <Route path="/bagis-kurumlari" exact component={DonateInstituesView}></Route>
+                    <Route path="/odeme" exact component={PaymentView}></Route>
+                    <Route path="/odeme/basarili" exact component={PaymentSuccessView}></Route>
+                    <Route path="/odeme/basarisiz/:error" exact component={PaymentErrorView}></Route>
                     <Route path="/bize-ulasin" exact component={ContactView}></Route>
                     <ArchiveContextWrapper>
                         <Route path="/arsiv" exact component={ArchiveView}></Route>
@@ -54,7 +60,7 @@ const RouterSite = (props) => {
                         <Route path="/arsiv/personel/:staffId" exact component={StaffProfileView}></Route>
                     </ArchiveContextWrapper>
 
-                    
+
 
                 </Switch>
             </SiteUserContextWrapper>

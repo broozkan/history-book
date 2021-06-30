@@ -18,6 +18,7 @@
     "dotenv": "^8.2.0",
     "exceljs": "^4.2.0",
     "express": "^4.17.1",
+    "iyzipay": "^2.0.48",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^8.3.0",
     "mongoose": "^5.11.2",

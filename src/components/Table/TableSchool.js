@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 import api from '../../services/api'
 import FormFilterSchool from '../Form/FormFilterSchool'
 import CardLoader from '../Loader/CardLoader'
@@ -47,12 +48,24 @@ const TableSchool = () => {
         })
     }
 
-    const handleDeleteClick = (e) => {
+    const handleDeleteClick = async (e) => {
 
-        const submitResponse = api.delete('/school/delete/'+e.target.dataset.id)
+        const submitResponse = await api.delete('/school/delete/' + e.target.dataset.id)
 
-        console.log(submitResponse);
-
+        if (submitResponse.data.response) {
+            Swal.fire({
+                title: 'Başarılı',
+                text: 'Okul silindi',
+                icon: 'success'
+            })
+            getSchools()
+        } else {
+            Swal.fire({
+                title: 'Bir sorun oluştu',
+                text: '',
+                icon: 'error'
+            })
+        }
     }
 
 

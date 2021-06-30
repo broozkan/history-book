@@ -79,8 +79,9 @@ class FormSchool extends Component {
 
         let formData = new FormData()
 
-
-        await formData.append('file', this.state.school_photo)
+        if (this.state.school_photo.name) {
+            await formData.append('file', this.state.school_photo)
+        }
         await formData.append('data', JSON.stringify(this.state))
 
 
@@ -98,7 +99,6 @@ class FormSchool extends Component {
                 text: "Okul kaydedildi",
                 icon: "success"
             })
-
         } else {
             Swal.fire({
                 title: "Başarılı",
@@ -106,6 +106,10 @@ class FormSchool extends Component {
                 icon: "error"
             })
         }
+
+        this.setState({
+            is_form_submitting: false
+        })
 
     }
 

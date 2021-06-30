@@ -1,51 +1,65 @@
+.city-photo {
+    width: 100%;
+}
+
 /* SHORTCUTS */
-.w-10{
+
+.w-10 {
     width: 10%;
 }
 
 /* HEADER */
-.mega-menu-content .portfolio-image{
+
+.mega-menu-content .portfolio-image {
     height: 185px;
 }
 
 /* PORTFOLIO */
-.portfolio-item .portfolio-image{
+
+.portfolio-item .portfolio-image {
     max-height: 40vh;
 }
 
 /* GALLERY */
-.gallery-item{
+
+.gallery-item {
     padding: 10px;
     cursor: pointer;
 }
-.photo-gallery-breadcrumb{
+
+.photo-gallery-breadcrumb {
     font-size: 18px!important;
 }
-.breadcrumb-item.active{
+
+.breadcrumb-item.active {
     color: #000000!important;
 }
-.card-photo-category .active{
+
+.card-photo-category .active {
     background-color: blue;
 }
-.grid-item>img, .grid-item>a>img{
+
+.grid-item>img, .grid-item>a>img {
     height: 200px;
 }
-.portfolio-item .portfolio-image{
+
+.portfolio-item .portfolio-image {
     height: 20rem;
 }
-.portfolio-item .portfolio-image img, .portfolio-item .portfolio-video img, .portfolio-item .grid-image img, .portfolio-item .grid-video img, .portfolio-item .flickity-viewport img, .grid-item .portfolio-image img, .grid-item .portfolio-video img, .grid-item .grid-image img, .grid-item .grid-video img, .grid-item .flickity-viewport img{
+
+.portfolio-item .portfolio-image img, .portfolio-item .portfolio-video img, .portfolio-item .grid-image img, .portfolio-item .grid-video img, .portfolio-item .flickity-viewport img, .grid-item .portfolio-image img, .grid-item .portfolio-video img, .grid-item .grid-image img, .grid-item .grid-video img, .grid-item .flickity-viewport img {
     height: 100%;
 }
 
-
 /* SIDE PANEL */
-.side-panel #header nav>ul>li>a{
+
+.side-panel #header nav>ul>li>a {
     text-transform: lowercase;
 }
 
-
 /* CARD */
-.card-loading{
+
+.card-loading {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -55,102 +69,113 @@
     justify-content: center;
     border-radius: 5px;
 }
-.card-loading .spinner-grow{
+
+.card-loading .spinner-grow {
     z-index: 6;
     margin: auto;
 }
-.card-footer{
+
+.card-footer {
     display: inline-flex;
     justify-content: space-between;
 }
-.table-query-row{
+
+.table-query-row {
     margin-bottom: 0.5rem;
 }
 
-
 /* FORM */
-.form-inline{
+
+.form-inline {
     padding-top: .5rem!important;
     padding-bottom: .5rem!important;
 }
-.form-inline label{
+
+.form-inline label {
     margin-right: 1rem;
 }
 
 /* ARCHIVE */
-.form-search-student input{
+
+.form-search-student input {
     font-size: 1rem!important;
 }
-.form-search-staff input{
+
+.form-search-staff input {
     font-size: 1rem!important;
 }
-.search-tabs{
+
+.search-tabs {
     justify-content: center;
 }
 
-.search-detail-container.closed{
+.search-detail-container.closed {
     transition: height .3s linear;
     height: 0px;
     overflow: hidden;
 }
 
-.form-search-student .search-detail-container.opened{
+.form-search-student .search-detail-container.opened {
     transition: height .3s linear;
     height: 20rem;
     overflow: visible;
 }
 
-.form-search-staff .search-detail-container.opened{
+.form-search-staff .search-detail-container.opened {
     transition: height .3s linear;
     height: 23rem;
     overflow: visible;
 }
 
-
-
-.card-clone{
+.card-clone {
     position: absolute;
     color: black;
     font-size: 14px;
     font-weight: bold;
 }
-#student-school-name-card-clone{
+
+#student-school-name-card-clone {
     top: 75px;
     left: 264px;
 }
-#student-name-card-clone{
+
+#student-name-card-clone {
     top: 142px;
     left: 264px;
 }
-#student-surname-card-clone{
+
+#student-surname-card-clone {
     top: 165px;
     left: 264px;
 }
 
-#student-father-name-card-clone{
+#student-father-name-card-clone {
     top: 188px;
     left: 264px;
 }
 
-#student-nationality-card-clone{
+#student-nationality-card-clone {
     top: 213px;
     left: 292px;
 }
-#student-birthday-card-clone{
+
+#student-birthday-card-clone {
     top: 237px;
     left: 292px;
 }
-#student-school-number-card-clone{
+
+#student-school-number-card-clone {
     top: 119px;
     left: 264px;
 }
 
-
 /* ZOOM LOADER */
-.book-loader-container.closed *{ 
+
+.book-loader-container.closed * {
     display: none;
 }
-.book-loader-container.closed{
+
+.book-loader-container.closed {
     display: flex;
     background-color: #ffffff;
     justify-content: center;
@@ -163,7 +188,8 @@
     bottom: 0;
     z-index: 1;
 }
-.book-loader-container.opened{
+
+.book-loader-container.opened {
     display: flex;
     background-color: #ffffff;
     justify-content: center;
@@ -176,77 +202,91 @@
     bottom: 0;
     z-index: 1;
 }
-.btn-cancel-search{
+
+.btn-cancel-search {
     float: right;
     position: absolute!important;
     right: 5rem;
     top: 5rem;
 }
 
-.book-loader-container img{
+.book-loader-container img {
     margin-top: 35%;
     z-index: 2;
     height: 44px;
 }
-.book-loader-container h2{
+
+.book-loader-container h2 {
     margin-top: 0;
     z-index: 2;
 }
 
 /* SEARCH RESULTS */
-.team-members.team-members-left .team-member .team-image{
+
+.team-members.team-members-left .team-member .team-image {
     width: 30%!important;
 }
-.team-member-ul{
+
+.team-member-ul {
     list-style: none;
     padding: 1rem;
 }
-.team-member-ul li span{
+
+.team-member-ul li span {
     margin-right: 0.3rem;
 }
 
-
 /* STUDENT PROFILE */
-.student-profile .personal-informations{
+
+.student-profile .personal-informations {
     list-style: none;
 }
 
-.student-profile .personal-informations li{
-    padding-top: 1rem ;
+.student-profile .personal-informations li {
+    padding-top: 1rem;
 }
 
 /* SEARCH PAGE */
-.search-page p{
+
+.search-page p {
     font-size: 1.2rem;
 }
+
 /* STOCK SEARCHS */
-.section-stock-searchs-content.closed{
+
+.section-stock-searchs-content.closed {
     transition: height .3s ease;
     height: 0px;
 }
 
-.section-stock-searchs-content.opened{
+.section-stock-searchs-content.opened {
     transition: height .3s ease;
     height: 40px;
 }
 
-.tbl-stock-searchs td{
+.tbl-stock-searchs td {
     padding: 15px;
 }
 
 /* DONATE */
-.widget-donate{
+
+.widget-donate {
     position: fixed!important;
     text-align: center;
     left: 3rem;
     bottom: 3rem;
     z-index: 1;
 }
-.widget-donate .btn-donate{
+
+.donate-institute img.active {
+    filter: brightness(0.8);
+}
+
+.widget-donate .btn-donate {
     border-radius: 50%!important;
 }
 
-.table-donates td{
+.table-donates td {
     font-size: 1.5rem!important;
     padding: 1rem!important;
 }

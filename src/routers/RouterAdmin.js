@@ -16,6 +16,10 @@ import NewStudentView from '../views/admin/Student/NewStudentView'
 import StudentListView from '../views/admin/Student/StudentListView'
 import UpdateStudentView from '../views/admin/Student/UpdateStudentView'
 
+import NewInstituteView from '../views/admin/Institute/NewInstituteView'
+import InstituteListView from '../views/admin/Institute/InstituteListView'
+import UpdateInstituteView from '../views/admin/Institute/UpdateInstituteView'
+
 import StaffListView from '../views/admin/Staff/StaffListView'
 import NewStaffView from '../views/admin/Staff/NewStaffView'
 import UpdateStaffView from '../views/admin/Staff/UpdateStaffView'
@@ -58,6 +62,11 @@ const RouterAdmin = () => {
                         <Route path="/admin/school/new" exact component={NewSchoolView}></Route>
                         <Route path="/admin/school/list" exact component={SchoolListView}></Route>
                         <Route path="/admin/school/update/:schoolId" exact component={UpdateSchoolView}></Route>
+
+
+                        <Route path="/admin/institute/new" exact component={NewInstituteView}></Route>
+                        <Route path="/admin/institute/list" exact component={InstituteListView}></Route>
+                        <Route path="/admin/institute/update/:instituteId" exact component={UpdateInstituteView}></Route>
 
                         <Route path="/admin/category/new" exact component={NewCategoryView}></Route>
                         <Route path="/admin/category/list" exact component={CategoryListView}></Route>

@@ -1,0 +1,20 @@
+@media screen and (max-width: 540px) {
+    .d-xs-none {
+        display: none!important;
+    }
+    .d-xs-block {
+        display: block!important;
+    }
+    .header-extras {
+        float: right!important;
+    }
+    .form-search-staff .search-detail-container.opened {
+        height: 33rem!important;
+    }
+    .form-search-student .search-detail-container.opened {
+        height: 33rem!important;
+    }
+    .widget-donate {
+        width: 100px!important;
+    }
+}

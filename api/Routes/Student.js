@@ -178,7 +178,7 @@ router.put('/update/:studentId', MultipartyMiddleware, async (req, res) => {
 
 
 router.get('/delete-all-students', async (req, res) => {
-
+    console.log("oket");
     await Student.studentModel.deleteMany({}, (err) => {
         if (err) {
             res.send({

@@ -1,13 +1,12 @@
 import React from 'react'
 import { Component } from 'react';
+import donatePng from '../../images/donate.png'
 
-
-class WidgetDonate extends Component{
+class WidgetDonate extends Component {
     render() {
         return (
             <div className="widget-donate">
-                <h4>Bağış Yap!</h4>
-                <a href="/bagis" class="btn btn-success btn-donate"><i class="fa fa-heart fa-3x"></i></a>
+                <a href="/bagis"><img src={donatePng} className="widget-donate" width="150" /></a>
             </div>
         )
     }

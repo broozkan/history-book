@@ -5,6 +5,8 @@ const app = express();
 
 const userRouter = require('./Routes/User')
 const postRouter = require('./Routes/Post')
+const donateRouter = require('./Routes/Donate')
+const instituteRouter = require('./Routes/Institute')
 const categoryRouter = require('./Routes/Category')
 const studentRouter = require('./Routes/Student')
 const staffRouter = require('./Routes/Staff')
@@ -54,15 +56,13 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.get('/broozkan', (req, res)=>{
-  console.log("çalıştıı")
-  res.send({'broozkan':'bros'})
-})
 
 
 /* routers */
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+app.use('/donate', donateRouter);
+app.use('/institute', instituteRouter);
 app.use('/category', categoryRouter);
 app.use('/student', studentRouter);
 app.use('/staff', staffRouter);
@@ -80,6 +80,6 @@ app.use('/student-verify-request', studentVerifyRequestRouter);
 
 //comment
 
-module.exports = app.listen(process.env.PORT || 8000, ()=>{
+module.exports = app.listen(process.env.PORT || 8000, () => {
   console.log("Listening...")
 })

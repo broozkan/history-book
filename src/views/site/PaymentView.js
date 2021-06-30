@@ -3,9 +3,8 @@ import SectionAboutUs from '../../components/Section/SectionAboutUs';
 import Footer from '../../components/Footer/Footer';
 import SectionPageTitle from '../../components/Section/SectionPageTitle';
 import { Component } from 'react';
-import FormDonate from '../../components/Form/FormDonate';
-
-class DonateView extends Component {
+import FormPayment from '../../components/Form/FormPayment';
+class PaymentView extends Component {
 
 
     render() {
@@ -17,12 +16,11 @@ class DonateView extends Component {
                         <div className="row">
                             <div className="col-lg-12">
                                 <div class="heading-text heading-section">
-                                    <h2 className="display-1"><span>Neden bağış?</span></h2>
-                                    <p>Yaptığınız bağışın %30'u sizlere bu arşivi açmamızda kullanılmaktadır. Geri kalanı ise belirli kurumlara bağış olarak aktarılmaktadır.</p>
+                                    <h2 className="display-1"><span>Teşekkür ederiz</span></h2>
                                 </div>
                             </div>
                         </div>
-                        <FormDonate />
+                        <FormPayment />
                     </div>
                 </section>
                 <Footer />
@@ -32,4 +30,4 @@ class DonateView extends Component {
 
 }
 
-export default DonateView
+export default PaymentView

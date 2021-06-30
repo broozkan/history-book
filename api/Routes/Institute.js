@@ -1,15 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const Post = require('../Models/Post')
+const Institute = require('../Models/Institute')
 const multiparty = require('connect-multiparty')
 const uploadDir = './public/images'
 const MultipartyMiddleware = multiparty({ keepExtensions: true, uploadDir: uploadDir })
 const fs = require('fs')
 const path = require('path');
 const Controller = require('../Controllers/Controller')
-const mongoose = require('mongoose')
 
-// get posts list
+// get institutes list
 router.get('/list/:page', async (req, res) => {
 
 
@@ -17,17 +16,13 @@ router.get('/list/:page', async (req, res) => {
     if (req.query) {
         req.query = Controller.deleteEmptyFilters(req.query)
 
-        if (req.query.post_name) {
-            req.query.post_name = { $regex: new RegExp(req.query.post_name, "i") }
-        }
-
-        if (req.query["_id"]) {
-            req.query["_id"] = mongoose.Types.ObjectId(req.query["_id"])
+        if (req.query.institute_name) {
+            req.query.institute_name = { $regex: new RegExp(req.query.institute_name, "i") }
         }
     }
 
 
-    const aggregate = Post.aggregate([{
+    const aggregate = Institute.aggregate([{
         $match: req.query
     }])
 
@@ -37,15 +32,15 @@ router.get('/list/:page', async (req, res) => {
         limit: 3
     }
 
-    Post.aggregatePaginate(aggregate, options, (err, result) => {
+    Institute.aggregatePaginate(aggregate, options, (err, result) => {
         res.send(result)
     })
 })
 
-// get specific post
-router.get('/get/:postId', async (req, res) => {
+// get specific institute
+router.get('/get/:instituteId', async (req, res) => {
 
-    Post.findById(req.params.postId, (err, result) => {
+    Institute.findById(req.params.instituteId, (err, result) => {
         res.send(result)
     })
 })
@@ -79,23 +74,20 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
             }
         })
 
-        req.body.post_photo = req.files.file.name
+        req.body.institute_photo = req.files.file.name
     } else {
-        req.body.post_photo = 'no-photo.jpg'
+        req.body.institute_photo = 'no-photo.jpg'
     }
 
 
 
 
-    const post = new Post({
-        post_title: req.body.post_title,
-        post_alternative_title: req.body.post_alternative_title,
-        post_photo: req.body.post_photo,
-        post_category: req.body.post_category,
-        post_content: req.body.post_content
+    const institute = new Institute({
+        institute_name: req.body.institute_name,
+        institute_photo: req.body.institute_photo
     })
 
-    const savedPost = post.save((err) => {
+    const savedInstitute = institute.save((err) => {
         if (err) {
             console.log(err);
             res.send({
@@ -105,7 +97,7 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
         } else {
             res.send({
                 response: true,
-                responseData: post
+                responseData: institute
             })
 
         }
@@ -114,7 +106,7 @@ router.post('/new', MultipartyMiddleware, async (req, res) => {
 })
 
 
-router.put('/update/:postId', MultipartyMiddleware, async (req, res) => {
+router.put('/update/:instituteId', MultipartyMiddleware, async (req, res) => {
 
     req.body = JSON.parse(req.body.data)
 
@@ -141,25 +133,20 @@ router.put('/update/:postId', MultipartyMiddleware, async (req, res) => {
             }
         })
 
-        req.body.post_photo = req.files.file.name
-    } else {
-        req.body.post_photo = "profile.jpg"
+        req.body.institute_photo = req.files.file.name
     }
 
     console.log(req.body);
 
     // update operation
-    await Post.findByIdAndUpdate(
-        { _id: req.params.postId },
+    await Institute.findByIdAndUpdate(
+        { _id: req.params.instituteId },
         {
-            post_title: req.body.post_title,
-            post_alternative_title: req.body.post_alternative_title,
-            post_photo: req.body.post_photo,
-            post_category: req.body.post_category,
-            post_content: req.body.post_content
+            institute_name: req.body.institute_name,
+            institute_photo: req.body.institute_photo
         }
 
-        , (err, updatedPost) => {
+        , (err, updatedInstitute) => {
             if (err) {
                 res.send({
                     response: false,
@@ -168,7 +155,7 @@ router.put('/update/:postId', MultipartyMiddleware, async (req, res) => {
             } else {
                 res.send({
                     response: true,
-                    responseData: updatedPost
+                    responseData: updatedInstitute
                 })
             }
         })
@@ -176,9 +163,9 @@ router.put('/update/:postId', MultipartyMiddleware, async (req, res) => {
 })
 
 
-router.delete('/delete/:postId', async (req, res) => {
+router.delete('/delete/:instituteId', async (req, res) => {
 
-    await Post.deleteOne({ _id: req.params.postId }, (err) => {
+    await Institute.deleteOne({ _id: req.params.instituteId }, (err) => {
         if (err) {
             res.send({
                 response: false,

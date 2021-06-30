@@ -8,9 +8,9 @@ const CardStaffSearchResult = (props) => {
 
     // render gender abbrevation
     let genderAbbr = ''
-    if(props.object.staff_gender === "K"){
+    if (props.object.staff_gender === "K") {
         genderAbbr = "KIZI"
-    }else{
+    } else {
         genderAbbr = "OĞLU"
     }
 
@@ -20,7 +20,7 @@ const CardStaffSearchResult = (props) => {
         <div class="col-lg-6">
             <div class="team-member">
                 <div class="team-image">
-                    <img src="https://1.bp.blogspot.com/_PuVIh5XWcv4/TT33Cx_jSYI/AAAAAAAAAFs/68XmCfBglgU/s1600/foto+ekram-4.JPG" />
+                    <img src={`${process.env.REACT_APP_API_ENDPOINT}file/${props.object.staff_photo}`} />
                 </div>
                 <div class="team-desc">
                     <span>{props.object.staff_father_name} {genderAbbr}</span>
@@ -31,7 +31,7 @@ const CardStaffSearchResult = (props) => {
                         <li><span className="fa fa-map-pin"></span> {props.object.staff_country}</li>
                     </ul>
                     <div class="align-center">
-                        <a class="btn btn-xs btn-slide btn-light" href={'/arsiv/personel/'+props.object._id} target="_blank">
+                        <a class="btn btn-xs btn-slide btn-light" href={'/arsiv/personel/' + props.object._id} target="_blank">
                             <i class="fas fa-chevron-right"></i>
                             <span>PROFİLE GİT</span></a>
                     </div>

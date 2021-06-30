@@ -18,10 +18,17 @@ const Header = (props) => {
 
         if (location.pathname === "/") {
             setState({
+                ...state,
                 header_class: "dark"
             })
         }
     }, [])
+
+    const handleOnChange = (e) => {
+        e.preventDefault()
+
+        window.location.href = e.target.value
+    }
 
     // render user profile content
     let userFieldHtml = ''
@@ -61,8 +68,8 @@ const Header = (props) => {
 
                     <div id="logo">
                         <a href="/">
-                            <span className="logo-default">sivaslisesi.com</span>
-                            <span className="logo-dark">sivaslisesi.com</span>
+                            <span className="logo-default d-xs-none">sivaslisesi.com</span>
+                            <span className="logo-dark d-xs-none">sivaslisesi.com</span>
                         </a>
                     </div>
 
@@ -77,8 +84,15 @@ const Header = (props) => {
                     </div>
 
 
-                    <div id="mainMenu-trigger"> <a className="lines-button x"><span className="lines"></span></a> </div>
-
+                    <select className="form-control d-none d-xs-block" onChange={handleOnChange} value={location.pathname}>
+                        <option value="/">ANASAYFA</option>
+                        <option value="/nedir">NEDİR?</option>
+                        <option value="/blog">KÖŞE YAZILARI</option>
+                        <option value="/arsiv">ARŞİV</option>
+                        <option value="/fotograf-galerisi">FOTOĞRAF GALERİSİ</option>
+                        <option value="/bize-ulasin">İLETİŞİM</option>
+                        <option value="/login">GİRİŞ YAP</option>
+                    </select>
 
                     <div id="mainMenu">
                         <div className="container">

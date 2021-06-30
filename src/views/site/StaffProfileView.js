@@ -35,7 +35,7 @@ const StaffProfileView = (props) => {
 
     const handleOpenModalClick = (e) => {
         e.preventDefault()
-        
+
         setState({
             ...state,
             show_login_modal: true
@@ -63,12 +63,12 @@ const StaffProfileView = (props) => {
     }
 
 
-    
-     // render staff comment field
-     let staffCommentHtml = ''
-     if(siteUserContext.state.is_logged_in){
-        staffCommentHtml = <FormStaffComment /> 
-     }else{
+
+    // render staff comment field
+    let staffCommentHtml = ''
+    if (siteUserContext.state.is_logged_in) {
+        staffCommentHtml = <FormStaffComment />
+    } else {
         staffCommentHtml = (
             <>
                 <hr></hr>
@@ -76,12 +76,12 @@ const StaffProfileView = (props) => {
                 <a href="#" onClick={handleOpenModalClick}>Üye girişi yapmak için tıklayın</a>
             </>
         )
-     }
+    }
 
 
     // render login modal
     let loginModalHtml = ''
-    if(state.show_login_modal){
+    if (state.show_login_modal) {
         loginModalHtml = <ModalLoginSite />
     }
 
@@ -102,7 +102,7 @@ const StaffProfileView = (props) => {
                                         <div class="col-lg-12">
                                             <div class="team-member">
                                                 <div class="team-image">
-                                                    <img className="img-fluid" src="https://static.nadirkitap.com/fotograf/339443/15/Efemera_201910162218037.jpg" />
+                                                    <img className="img-fluid" src={`${process.env.REACT_APP_API_ENDPOINT}file/${state.staff.staff_photo}`} />
                                                 </div>
                                                 <div class="team-desc text-center">
                                                     <h3>{state.staff.staff_name} {state.staff.staff_surname}</h3>
@@ -172,7 +172,7 @@ const StaffProfileView = (props) => {
                                             </div>
                                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                                 Lorem ipsum
-                                                </div>
+                                            </div>
                                             <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                                                 <h5>Bu kişiyi tanıyor musunuz?</h5>
                                                 <h6 className="card-subtitle text-muted mb-3">öyleyse yorum yapın</h6>

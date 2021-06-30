@@ -48,7 +48,7 @@ class FormStudent extends Component {
 
 
     getStudent = async () => {
-      
+
 
         const student = await api.get('/student/get/' + this.props.student_id, {})
 
@@ -107,7 +107,7 @@ class FormStudent extends Component {
                     student_school: studentSchoolArray
                 })
 
-            }else{
+            } else {
                 this.setState({
                     [e.target.name]: e.target.value
                 })
@@ -265,10 +265,8 @@ class FormStudent extends Component {
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="student_nationality">Uyruğu (*)</label>
-                                <select className="form-control" value={this.state.student_nationality} onChange={this.handleChange} name="student_nationality" id="student_nationality" required>
-                                    <option value="" disabled selected>Uyruk Seçiniz</option>
-                                    <option value="turkish">Türk</option>
-                                </select>
+                                <input type="text" class="form-control" value={this.state.student_nationality} onChange={this.handleChange} name="student_nationality" id="student_nationality" placeholder="Öğrenci uyruğunu giriniz" required="" />
+
                             </div>
                         </div>
                         <div class="h5 mb-4">Okul Bilgileri</div>

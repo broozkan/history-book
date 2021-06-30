@@ -12,7 +12,7 @@ const Header = () => {
                         <h3 className="m-b-0">SİVAS LİSESİ DEV</h3>
                         <h2 className="text-lg m-t-0">ARŞİV</h2>
                         <p className="lead">Geçmişte bir yolculuğa hazır mısınız?</p>
-                        <a className="btn btn-light btn-outline" href="/arsiv/">Detaylı Arama Yap</a>
+                        <a className="btn btn-light btn-outline" href="/arsiv">Detaylı Arama Yap</a>
                     </div>
                 </div>
             </div>

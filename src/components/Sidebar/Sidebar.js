@@ -21,17 +21,18 @@ const Sidebar = () => {
                                 <li><a href="/admin/photo-gallery/list"><span className="fa fa-images"></span> FOTOĞRAF GALERİLERİ <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <li><a href="/admin/student/list"><span className="fa fa-user-friends"></span> ÖĞRENCİLER <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <li><a href="/admin/staff/list"><span className="fa fa-user-friends"></span> PERSONELLER <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
+                                <li><a href="/admin/institute/list"><span className="fa fa-building"></span> DERNEKLER <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <li><a href="/admin/student-comment/list"><span className="fa fa-comments"></span> YORUMLAR <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <li><a href="/admin/post/list"><span className="fa fa-rss"></span> YAZILAR <span className="fa fa-chevron-right float-right mt-1"></span></a></li>
                                 <hr className="space"></hr>
 
                                 <li><a href="/admin/user/logout"> <span className="fa fa-sign-out-alt"></span> ÇIKIŞ YAP</a></li>
-                                
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
+
                             </ul>
                         </nav>
                     </div>

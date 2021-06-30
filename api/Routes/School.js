@@ -112,6 +112,7 @@ router.put('/update/:schoolId', MultipartyMiddleware, async (req, res) => {
     req.body = JSON.parse(req.body.data)
 
 
+    let updateObject = {}
     if (req.files.file) {
         const tmp_path = req.files.file.path
         const target_path = path.join(uploadDir, req.files.file.name)
@@ -135,21 +136,28 @@ router.put('/update/:schoolId', MultipartyMiddleware, async (req, res) => {
         })
 
         req.body.school_photo = req.files.file.name
-    } else {
-        req.body.school_photo = 'school-default.jpg'
-    }
 
-    
-
-    // update operation
-    await School.schoolModel.findByIdAndUpdate(
-        { _id: req.params.schoolId },
-        {
+        updateObject = {
             school_name: req.body.school_name,
             school_building_date: req.body.school_building_date,
             school_description: req.body.school_description,
             school_photo: req.body.school_photo
         }
+    } else {
+        updateObject = {
+            school_name: req.body.school_name,
+            school_building_date: req.body.school_building_date,
+            school_description: req.body.school_description
+        }
+    }
+
+
+
+
+    // update operation
+    await School.schoolModel.findByIdAndUpdate(
+        { _id: req.params.schoolId },
+        updateObject
 
         , (err, updatedSchool) => {
             if (err) {
@@ -170,7 +178,7 @@ router.put('/update/:schoolId', MultipartyMiddleware, async (req, res) => {
 
 router.delete('/delete/:schoolId', async (req, res) => {
 
-    await School.deleteOne({ _id: req.params.schoolId }, (err) => {
+    await School.schoolModel.deleteOne({ _id: req.params.schoolId }, (err) => {
         if (err) {
             res.send({
                 response: false,
